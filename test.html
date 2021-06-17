@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="js/vue.js"></script>
+    <title>Document</title>
+    <style scoped>
+        #drop-area {
+            width: 300px;
+            height: 300px;
+            background-color: #fff;
+            border: 1px solid red;
+        }
+        
+        .drop-active {
+            background-color: rgba(231, 234, 246, 0.8);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div id="drop-area" :class="dropActive ? 'drop-active' : ''">
+        </div>
+
+    </div>
+</body>
+
+</html>
+
+<script>
+    var app = new Vue({
+        el: '#app',
+        data() {
+            return {
+                dropActive: false
+            }
+        },
+        methods: {
+            dropEvent(e) {
+                this.dropActive = false
+                e.stopPropagation()
+                e.preventDefault()
+                this.uploadFile(e.dataTransfer.files)
+            },
+            uploadFile(file) { // 渲染上传文件
+                console.log(file[0], 'file')
+                if (file && file.length) {
+                    //自行发挥，存本地或上传服务器   
+                }
+            },
+        },
+        mounted() {
+            let dropArea = document.getElementById('drop-area')
+            dropArea.addEventListener('drop', this.dropEvent, false)
+            dropArea.addEventListener('dragleave', (e) => {
+                e.stopPropagation()
+                e.preventDefault()
+                this.dropActive = false
+            })
+            dropArea.addEventListener('dragenter', (e) => {
+                e.stopPropagation()
+                e.preventDefault()
+                this.dropActive = true
+            })
+            dropArea.addEventListener('dragover', (e) => {
+                e.stopPropagation()
+                e.preventDefault()
+                this.dropActive = true
+            })
+        }
+    })
+</script>

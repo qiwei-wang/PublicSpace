@@ -1,0 +1,46 @@
+.header a {
+    color: #fff;
+}
+
+#dlbutton {
+    margin-left: 20px;
+    cursor: pointer;
+}
+
+.SigninWindow {
+    /* min-width: 500px; */
+    max-height: 360px;
+    width: 0px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    overflow: hidden;
+    transition: 0.2s;
+    /* 50%为自身尺寸的一半 */
+}
+
+.SigninWindow .card {
+    margin-bottom: 0px;
+    margin-top: 0px;
+}
+
+.SigninWindow .card .SubmitBox {
+    text-align: center;
+    margin-bottom: 8px;
+}
+
+.SigninWindow .card .card-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+body {
+    background-color: rgb(230, 230, 230);
+}
+
+.main {
+    margin: 0 auto;
+    background-color: #fff;
+    width: 600px;
+}

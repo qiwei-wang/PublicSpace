@@ -1,0 +1,628 @@
+* {
+    margin: 0px;
+    padding: 0px;
+    /* overflow-x: hidden; */
+}
+
+body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown) {
+    overflow-y: visible;
+}
+
+html {
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+
+body {
+    background: #ebe9e9;
+}
+
+.material-icons {
+    margin-right: 10px;
+}
+
+.navbar {
+    margin-bottom: 0px;
+    border-radius: 0px;
+}
+
+#dlbutton {
+    width: 80px;
+    color: #fff;
+    margin-right: 20px;
+}
+
+.window {
+    position: absolute;
+    min-width: 250px;
+    padding: 20px;
+    left: 40%;
+    top: 40%;
+    background: #fff;
+}
+
+.SigninWindow {
+    /* min-width: 500px; */
+    position: absolute;
+    transition: 0.2s;
+    /* left: 50%; */
+    z-index: 50;
+    overflow: hidden;
+    max-height: 387px;
+    padding: 10px;
+}
+
+.SigninWindow .card {
+    max-height: 386px;
+    padding-bottom: 10px;
+    box-shadow: 0 2px 4px 0 rgb(0 0 0 / 14%);
+}
+
+.SigninWindow .card .SubmitBox {
+    margin-bottom: 5px;
+}
+
+.allbox {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    /* display: flex; */
+}
+
+.FileBox {
+    /* position: relative; */
+    /* left: 190px;
+    top: -45px; */
+    /* min-width: 150px; */
+}
+
+.LeftInformation {
+    width: 250px;
+    height: 100%;
+    background: #212121;
+    margin: 0;
+    position: absolute;
+    top: 70px;
+    overflow: hidden;
+    left: -230px;
+    transition: 0.5s;
+    text-align: center;
+    z-index: 98;
+}
+
+#dowButton {
+    position: relative;
+    left: 0px;
+    margin-top: 50px;
+    transition: 0.3s;
+}
+
+#shareButton {
+    position: relative;
+    left: 0px;
+    margin-top: 20px;
+    transition: 0.3s;
+}
+
+.CancelShareButton {
+    position: relative;
+    left: -200px;
+    margin-top: 20px;
+    transition: 0.3s;
+}
+
+#deleteButton {
+    position: relative;
+    left: 0px;
+    margin-top: 20px;
+    transition: 0.3s;
+}
+
+.LeftInformation .material-icons {
+    width: 100px;
+    font-size: 100px;
+    margin-right: 0px;
+    margin: 0 auto;
+    color: #fff;
+    display: block;
+    margin-top: 50px;
+}
+
+.LeftInformation span {
+    margin-top: 20px;
+    color: #fff;
+    display: block;
+}
+
+.LeftInformation table {
+    width: 240px;
+    margin: 0 auto;
+    margin-top: 20px;
+    color: #fff;
+    display: block;
+    /* margin-left: 40px; */
+}
+
+.LeftInformation table tr {
+    display: inline-block;
+    min-width: 220px;
+}
+
+.bodyer {
+    width: 100%;
+    min-height: 90vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #ebe9e9;
+    overflow: hidden;
+}
+
+.search {
+    width: 100%;
+    display: inline-block;
+}
+
+.searchbox {
+    width: 250px;
+    margin: 0 auto;
+    /* transition: 0.5s; */
+}
+
+.searchbox form {
+    margin-bottom: 1.125rem;
+    /* margin-bottom: 0rem; */
+}
+
+.searchbox .form-inline .form-control {
+    background-image: linear-gradient( 0deg, #000000 2px, rgba(156, 39, 176, 0) 0), linear-gradient( 0deg, #d2d2d2 1px, hsla(0, 0%, 82%, 0) 0);
+}
+
+.searchbox .form-inline {
+    width: 350px;
+}
+
+.form-control {
+    background: no-repeat bottom, 50% calc(100% + 45px);
+    background-size: 0 100%, 100% 100%;
+    border: 0;
+    transition: background 0s ease-out;
+    padding-left: 0;
+    padding-right: 0;
+    border-radius: 0;
+}
+
+.searchbox .form-inline .form-group input {
+    width: 300px;
+    height: 46px;
+    font-size: 20px;
+    padding-bottom: 0px;
+}
+
+.main {
+    width: 58%;
+    position: relative;
+    /* height: 600px; */
+    background: #fafafa;
+    margin: 0px auto;
+    border-radius: 0.25rem;
+    box-shadow: 0 4px 20px 0 rgb(0 0 0 / 7%), 0 7px 12px -5px rgb(33 33 33 / 30%);
+    min-width: 800px;
+    height: 658px;
+    z-index: 10;
+}
+
+.file {
+    position: relative;
+    display: inline-block;
+    background: #999;
+    border: 1px solid #999;
+    border-radius: 4px;
+    padding: 4px 12px;
+    overflow: hidden;
+    color: #fff;
+    text-decoration: none;
+    text-indent: 0;
+    vertical-align: middle;
+    font-size: 14px;
+    padding: 8px;
+    transition: 0.2s;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+#file {
+    cursor: pointer;
+}
+
+.file input {
+    position: absolute;
+    font-size: 100px;
+    right: 0;
+    top: 0;
+    opacity: 0;
+}
+
+.file:hover {
+    color: #fff;
+    box-shadow: 0 10px 10px 0 hsl(0deg 0% 60% / 14%), 0 3px 1px -2px hsl(0deg 0% 60% / 20%), 0 1px 5px 0 hsl(0deg 0% 60% / 12%);
+    text-decoration: none;
+}
+
+.UploadButton {
+    overflow: hidden;
+}
+
+.UploadButton span {
+    display: none;
+}
+
+.fileBox {
+    min-height: 600px;
+}
+
+.folder {
+    margin: 20px;
+    width: 110px;
+    height: 135px;
+    display: inline-block;
+    text-align: center;
+    border-radius: 0.25rem;
+    transition: 0.1s;
+    cursor: pointer;
+    flex-grow: 1;
+    position: relative;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.folder Img {
+    margin: 5px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.folder:hover {
+    /* background-color: rgba(170, 218, 250, 0.9); */
+    /* color: white; */
+}
+
+.folder>Img {
+    transition: 0.3s;
+    /* transition-timing-function: cubic-bezier(0.38, -0.2, 0.74, 0.46); */
+}
+
+.folder:hover>Img {
+    /* background-color: violet; */
+    transform: translateY(-0.75rem) rotateZ(0deg);
+    filter: drop-shadow(0px 15px 5px #a3a3a3);
+    transform: translateY(-0.75rem) rotateZ(-10deg);
+}
+
+.fImgIcon {
+    display: block;
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    width: 20px;
+    height: 20px;
+    margin: 0;
+}
+
+.folder span {
+    display: flex;
+    justify-content: center;
+    height: 24px;
+}
+
+.folderBox {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.fakeFolder {
+    flex-grow: 1;
+    width: 110px;
+    margin: 20px;
+}
+
+.container .navbar-brand {
+    padding: 0px;
+}
+
+.fileBox {
+    max-width: 800px;
+}
+
+.FiledirectoryBox {
+    z-index: 1;
+    /* overflow: auto; */
+    /* width: 54%;
+    min-width: 717.77px; */
+    max-height: 48px;
+    margin: 0 auto;
+    position: relative;
+    /* top: 65px; */
+    /* left: -40px; */
+    box-shadow: 0 10px 20px 0 rgb(0 0 0 / 7%), 0 7px 12px -5px rgb(33 33 33 / 30%);
+}
+
+.FiledirectoryBox .breadcrumb {
+    /* background: #fafafa; */
+    border-bottom: #000;
+    margin-bottom: -0.3rem;
+    background-color: #212121;
+}
+
+.FiledirectoryBox .breadcrumb-item a {
+    color: #fff!important;
+}
+
+.FiledirectoryBox .breadcrumb-item {
+    color: #fff!important;
+}
+
+.FiledirectoryBox .breadcrumb-item+.breadcrumb-item:before {
+    color: #fff!important;
+}
+
+.main nav {
+    min-width: 165px;
+    display: inline-block;
+}
+
+.main .breadcrumb a {
+    color: #000;
+}
+
+.main button {
+    margin-top: 5px;
+    margin-left: 5px;
+}
+
+.main .mainhead {
+    height: 48px;
+    display: flex;
+    /* justify-content: space-between; */
+    justify-content: flex-start;
+}
+
+.main .mainhead ol {
+    /* float: right; */
+    font-size: 18px;
+    padding: 10px 14px;
+}
+
+.BackButton {
+    margin: 5px;
+    cursor: pointer;
+}
+
+.pagebox nav {
+    width: 240px;
+    margin: 0 auto;
+}
+
+.pagebox {
+    width: 58%;
+    height: 45px;
+    background-color: transparent;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pagebox .page-ul {
+    list-style: none;
+}
+
+.pagebox li {
+    float: left;
+}
+
+#Popup {
+    margin-top: 50px;
+}
+
+.FolderpassWord {
+    /* height: 2.625em;
+    padding: .75em;
+    width: 100%;
+    transition: border-color .3s, box-shadow .3s;
+    border: 1px solid #d9d9d9;
+    border-radius: .1875em;
+    font-size: 1.125em;
+    box-shadow: inset 0 1px 1px rgb(0 0 0 / 6%);
+    box-sizing: border-box;
+    margin: 1em auto; */
+    display: block;
+}
+
+.chFolderpassWord {
+    /* height: 2.625em;
+    padding: .75em;
+    width: 100%;
+    transition: border-color .3s, box-shadow .3s;
+    border: 1px solid #d9d9d9;
+    border-radius: .1875em;
+    font-size: 1.125em;
+    box-shadow: inset 0 1px 1px rgb(0 0 0 / 6%);
+    box-sizing: border-box;
+    margin: 1em auto; */
+    display: none;
+}
+
+.PopupCFolder {
+    width: 510px;
+    /* height: 600px; */
+    background: #fafafa;
+    border-radius: 0.25rem;
+    box-shadow: 0 4px 20px 0 rgb(0 0 0 / 7%), 0 7px 12px -5px rgb(33 33 33 / 30%);
+    position: absolute;
+    left: 100%;
+    z-index: 99;
+    top: 15%;
+    transition: 0.3s;
+}
+
+#RegisterValidation {
+    margin: 0px;
+}
+
+.card {
+    height: 100%;
+    margin: 0;
+    z-index: 99;
+}
+
+.form-control {
+    background: no-repeat bottom, 50% calc(100% + 35px);
+    background-image: linear-gradient( 0deg, #212529 2px, rgba(112, 41, 124, 0) 0), linear-gradient( 0deg, #d2d2d2 1px, hsla(0, 0%, 82%, 0) 0);
+    background-image: linear-gradient( 0deg, #212529 2px, rgba(112, 41, 124, 0) 0), linear-gradient( 0deg, #d2d2d2 1px, hsla(0, 0%, 82%, 0) 0);
+    background-size: 0 100%, 100% 100%;
+    border: 0;
+    transition: background 0s ease-out;
+    padding-left: 0;
+    padding-right: 0;
+    border-radius: 0;
+}
+
+.FolderPassBox {
+    display: none;
+}
+
+.chFolderPassBox {
+    display: block;
+}
+
+.chform-control:invalid {
+    background-image: linear-gradient( 0deg, #f44336 2px, rgba(244, 67, 54, 0) 0), linear-gradient( 0deg, #d2d2d2 1px, hsla(0, 0%, 82%, 0) 0);
+}
+
+.SubmitBox {
+    width: 150px;
+    margin: 5px auto;
+    margin-bottom: 30px;
+}
+
+.SubmitBox button {
+    width: 150px;
+}
+
+.FolderPassBox .card-body {
+    padding-top: 0px;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.card-header .card-title {
+    display: inline-block;
+    line-height: 48px;
+}
+
+
+/* cursor: pointer; */
+
+.cknavright {
+    /* position: absolute; */
+    /* left: 100%; */
+}
+
+.cknavright2 {
+    /* position: absolute; */
+    /* left: 100%; */
+}
+
+#dlbutton {
+    cursor: pointer;
+}
+
+#CheckSpan {
+    margin-top: 0;
+}
+
+#demo {
+    width: 100%;
+    height: 500px;
+    overflow: hidden;
+    position: relative;
+    display: none
+}
+
+.progressBox {
+    position: absolute;
+    top: 100%;
+    width: 500px;
+    transition: 0.3s;
+    opacity: 0;
+    /* display: none; */
+    /* text-align: center; */
+}
+
+.progressBoxback {
+    position: absolute;
+    top: 90%;
+    width: 500px;
+    transition: 0.3s;
+    opacity: 1;
+    /* text-align: center; */
+}
+
+
+/* .progress {
+    width: 600px;
+    height: 10px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    margin: 10px 0px;
+    overflow: hidden;
+} */
+
+
+/* 初始状态设置进度条宽度为0px */
+
+
+/* .progress>div {
+    width: 0px;
+    height: 100%;
+    background-color: yellowgreen;
+    transition: all .3s ease;
+} */
+
+
+/* .pagebox .page-ul .pagelink {
+    border: 0;
+    border-radius: 30px!important;
+    transition: all .3s;
+    padding: 0 10px;
+    margin: 0 3px;
+    min-width: 30px;
+    height: 30px;
+    line-height: 30px;
+    color: #999;
+    font-weight: 400;
+    font-size: 12px;
+    text-transform: uppercase;
+    background: transparent;
+    text-align: center;
+    font-size: 12px;
+    box-sizing: border-box;
+    display: block;
+    /* border-bottom: ; */
+
+
+/* } */
+
+
+/* .pagebox .page-ul .pagelink:active {
+    line-height: 15px;
+    background-color: #d2d2d2;
+} */

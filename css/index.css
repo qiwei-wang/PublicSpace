@@ -1,0 +1,409 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.cavs {
+    z-index: 1;
+    position: fixed;
+    width: 95%;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+body .swal2-shown {
+    z-index: 999999;
+}
+
+#app {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    background: url("../image/bg1.jpg") no-repeat;
+    background-size: 100% 100%;
+}
+
+.text1 {
+    z-index: 999999;
+    color: #fff;
+    padding-top: 5%;
+    opacity: 0;
+    animation-name: text1;
+    animation-duration: 4s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes text1 {
+    0% {
+        opacity: 0;
+        margin-left: 42%;
+        padding-top: 35%;
+    }
+    45% {
+        opacity: 1;
+        margin-left: 42%;
+        padding-top: 10%;
+    }
+    75% {
+        opacity: 1;
+        margin-left: 10%;
+        padding-top: 10%;
+    }
+    100% {
+        opacity: 1;
+        margin-left: 10%;
+        padding-top: 10%;
+    }
+}
+
+.text2 {
+    z-index: 999999;
+    color: #fff;
+    padding-top: 2%;
+}
+
+.ht1 {
+    margin-left: 0%;
+    opacity: 0;
+    animation-name: ht1;
+    animation-duration: 1.5s;
+    animation-delay: 2.5s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes ht1 {
+    0% {
+        opacity: 0;
+        margin-left: 10%;
+    }
+    100% {
+        opacity: 1;
+        margin-left: 10%;
+    }
+}
+
+.ht2 {
+    opacity: 0;
+    margin-left: 0%;
+    animation-name: ht1;
+    animation-duration: 1.5s;
+    animation-delay: 2.5s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes ht2 {
+    0% {
+        opacity: 0;
+        margin-right: 0%;
+    }
+    100% {
+        opacity: 1;
+        margin-right: 15%;
+    }
+}
+
+.text2 h3 {
+    margin-bottom: 15px;
+}
+
+.loginmain {
+    background: rgba(0, 0, 0, 0.5);
+    width: 540px;
+    height: 350px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    padding: 100px 40px 40px 40px;
+    box-shadow: -15px 15px 15px rgba(6, 17, 47, 0.7);
+    margin-right: 0%;
+    opacity: 0;
+    z-index: 99998;
+    animation-name: logm;
+    animation-duration: 1.5s;
+    animation-delay: 2.5s;
+    animation-fill-mode: forwards;
+    /* animation-fill-mode : none | forwards | backwards | both;
+
+值                 描述
+none               不改变默认行为。
+forwards           当动画完成后，保持最后一个属性值（在最后一个关键帧中定义）。
+backwards          在 animation-delay 所指定的一段时间内，在动画显示之前，应用开始属性值（在第一个关键帧中定义）。
+both               向前和向后填充模式都被应用。 */
+}
+
+.zcmain {
+    background: rgba(0, 0, 0, 0.5);
+    width: 540px;
+    height: 350px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    padding: 100px 40px 40px 40px;
+    box-shadow: 15px 15px 15px rgba(6, 17, 47, 0.7);
+    margin-right: 0%;
+    opacity: 0;
+    z-index: 99997;
+    animation-duration: 1s;
+    animation-name: 1;
+    /* animation-delay: 2.5s; */
+    animation-fill-mode: forwards;
+    padding-bottom: 50px;
+    transition: .5s;
+}
+
+#zcBack {
+    margin-top: -60px;
+}
+
+#zcBack img {
+    box-sizing: content-box;
+    padding: 5px;
+    width: 24px;
+    cursor: pointer;
+}
+
+@keyframes zcMAIN {
+    0% {
+        opacity: 0;
+        margin-right: 15%;
+        height: 350px;
+    }
+    100% {
+        opacity: 1;
+        margin-right: 10%;
+        height: 480px;
+    }
+}
+
+@keyframes NozcMAIN {
+    0% {
+        opacity: 1;
+        margin-right: 10%;
+        height: 450px;
+    }
+    100% {
+        opacity: 0;
+        margin-right: 15%;
+        height: 350px;
+    }
+}
+
+.zcmain .login-btn {
+    margin-top: 40px;
+}
+
+.zc-check {
+    position: relative;
+}
+
+.zcmain .form-check .form-check-input:checked~.form-check-sign .check {
+    background: #61BFFF;
+}
+
+.zc-check .form-check .form-check-sign .check {
+    border: 1px solid rgba(97, 191, 255, .54);
+}
+
+.zc-check .form-check {
+    margin: 10px 0px;
+    /* position: absolute; */
+    z-index: 1;
+    left: 36px;
+    top: 0px;
+    opacity: 1;
+}
+
+.zc-scheck {
+    position: relative;
+}
+
+.zc-scheck .form-check .form-check-sign .check {
+    border: 1px solid rgba(97, 191, 255, .54);
+}
+
+.zc-scheck .form-check {
+    padding: 10px 0px;
+    /* position: absolute; */
+    z-index: 1;
+    left: 36px;
+    top: 0px;
+    opacity: 1;
+}
+
+.zcmain .login-btn {
+    margin-top: 0px;
+}
+
+.zcmain .login-btn .dl {
+    top: 20px;
+    left: 0;
+    transition: .5s;
+}
+
+@keyframes logm {
+    0% {
+        opacity: 0;
+        margin-right: 0%;
+    }
+    100% {
+        opacity: 1;
+        margin-right: 15%;
+    }
+}
+
+@keyframes Rlogm {
+    0% {
+        opacity: 1;
+        margin-right: 15%;
+        animation-duration: 1s;
+        animation-delay: 0s;
+    }
+    99% {
+        opacity: 0;
+        margin-right: 39%;
+    }
+    100% {
+        overflow: hidden;
+        height: 0px;
+    }
+}
+
+@keyframes NoRlogm {
+    0% {
+        opacity: 0;
+        margin-right: 39%;
+        z-index: 99999;
+    }
+    100% {
+        opacity: 1;
+        margin-right: 15%;
+        animation-duration: 1s;
+        animation-delay: 0s;
+    }
+}
+
+.login-title {
+    color: #D3D7F7;
+    height: 60px;
+    font-size: 20px;
+    text-align: center;
+    margin-top: -20px;
+}
+
+.login-con {
+    height: 208px;
+    position: absolute;
+    left: 0;
+    width: 80%;
+    margin: 0 10%;
+}
+
+.login-user {
+    position: relative;
+}
+
+.icon {
+    position: absolute;
+    z-index: 1;
+    left: 36px;
+    top: 8px;
+    opacity: 1;
+}
+
+.login-con input {
+    width: calc(100% - 130px);
+    margin-top: -2px;
+    background: rgba(57, 61, 82, 0);
+    left: 0;
+    padding: 10px 65px;
+    border-top: 2px solid rgba(57, 61, 82, 0);
+    border-bottom: 2px solid rgba(57, 61, 82, 0);
+    border-right: none;
+    border-left: none;
+    outline: none;
+    font-family: 'Gudea', sans-serif;
+    box-shadow: none;
+    color: #61BFFF !important;
+}
+
+.login-pwd,
+.login-yan {
+    position: relative;
+}
+
+
+/*
+.login-pwd .icon{
+    position: absolute;
+    z-index: 1;
+    left: 36px;
+    top: 8px;
+    opacity: .5;
+}*/
+
+.login-btn {
+    width: 80%;
+    margin: 0 auto;
+    position: relative;
+}
+
+.login-btn input {
+    border-radius: 3px;
+    background: transparent;
+    border: 2px solid #4FA1D9;
+    color: #4FA1D9;
+    text-transform: uppercase;
+    font-size: 11px;
+    cursor: pointer;
+    position: absolute;
+    top: 50px;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 40%;
+    transition-property: background, color;
+    -webkit-transition-duration: .2s;
+    transition-duration: .2s;
+}
+
+.login-btn .dl {
+    left: -150px;
+    padding: 10px;
+}
+
+.login-btn .zc {
+    left: 150px;
+    padding: 10px;
+}
+
+.login-btn input:hover {
+    color: white !important;
+    background: #4FA1D9;
+    cursor: pointer;
+    -webkit-transition-property: background, color;
+    transition-property: background, color;
+    -webkit-transition-duration: .2s;
+    transition-duration: .2s;
+}
+
+.login-user .userName{
+    left: 34px;
+}
+.login-user .Rpass{
+    left: 34px;
+}

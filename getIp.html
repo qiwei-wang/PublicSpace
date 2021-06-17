@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="js/vue.js"></script>
+    <script type="text/javascript">
+        function getUserIP() {
+            var RTCPeerConnection = window.RTCPeerConnection || window.webkitRTCPeerConnection || window.mozRTCPeerConnection;
+            if (RTCPeerConnection)(() => {
+                var rtc = new RTCPeerConnection()
+                rtc.createDataChannel(''); //创建一个可以发送任意数据的数据通道
+                rtc.createOffer(offerDesc => { //创建并存储一个sdp数据
+                    rtc.setLocalDescription(offerDesc)
+                }, e => {
+                    console.log(e)
+                })
+                rtc.onicecandidate = (evt) => { //监听candidate事件
+                    if (evt.candidate) {
+                        var ip_addr = evt.candidate.address;
+                        console.log(evt.candidate);
+                        // localStorage.setItem('ip_addr', ip_addr);
+                        // localStorage.getItem('ip_addr');
+
+                    }
+                }
+            })()
+            else {
+                console.log("目前仅测试了chrome浏览器OK")
+            }
+        }
+    </script>
+    <!-- ———————————————— 版权声明：本文为CSDN博主「zx19930309」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。 原文链接：https://blog.csdn.net/zx19930309/article/details/90199656 -->
+</head>
+
+<body>
+    <input type="button" onclick="getUserIP()">
+    <div id="app">
+
+    </div>
+    <script src="http://pv.sohu.com/cityjson?ie=utf-8"></script>
+    <script>
+        //var ip=returnCitySN["cip"];
+        //alert(ip);
+    </script>
+    <!--此处查到的ip地址为“电信和联通互相切换”-->
+    <script src="http://pv.sohu.com/cityjson?ie=utf-8"></script>
+    <!-- ———————————————— 版权声明：本文为CSDN博主「微小东」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。 原文链接：https://blog.csdn.net/u014796999/article/details/51871877 -->
+    <script>
+        getUserIP();
+    </script>
+</body>
+<!-- <script>
+    var app = new Vue({
+        el: "#app",
+        data: {
+
+        },
+        mounted() {
+            this.ready();
+        },
+        methods: {
+            ready() {
+                var cip = returnCitySN["cip"];
+                console.log(cip); //cip就是本机ip地址
+            },
+        }
+    })
+</script> -->
+
+</html>
+
+<!-- 解决方案
+火狐(FireFox)删除隐藏IP
+打开IPabout:config
+搜索配置media.peerconnection.ice.obfuscate_host_addresses 改为false
+此时刷新程序,IP正常显示
+
+谷歌(Chrome)删除隐藏IP
+在chrome 浏览器地址栏中输入：chrome://flags/
+
+搜索#enable-webrtc-hide-local-ips-with-mdns 该配置 并将属性改为 disabled
+此时刷新程序,IP正常显示.
+浪费一天时间,只为了这一个Bug.
+————————————————
+版权声明：本文为CSDN博主「ros小生」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
+原文链接：https://blog.csdn.net/u011118482/article/details/104848709 -->

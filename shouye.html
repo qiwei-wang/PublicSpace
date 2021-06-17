@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="assets/css/material-dashboard.min.css?v=2.1.1" rel="stylesheet" />
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="css/font.css" />
+    <link rel="stylesheet" href="css/shouye.css">
+    <script src="js/vue.js"></script>
+    <script src="assets/js/jquery-3.6.0.min.js" type="text/javascript"></script>
+    <script src="assets/js/plugins/sweetalert2.js"></script>
+</head>
+
+<body>
+    <div id="app" @click="Initial">
+        <!-- 菜单栏 -->
+        <div class="MenuBar">
+            <!-- 菜单栏头部 -->
+            <div class="MenuBarH">
+                <img src="img/PublicSpaceIcon.png" width="65px">
+                <span>PublicSpace</span>
+            </div>
+
+            <!-- 菜单栏身体-->
+            <div class="MenuBarB">
+                <!-- 菜单栏文件按钮Folder是文件M是菜单栏-->
+                <div class="Mbutton MFolder">
+                    <span class="material-icons">folder</span>
+                    <div class="text">文件</div>
+                </div>
+                <!-- 菜单栏回收站按钮RecycleBin是回收站M是菜单栏-->
+                <div class="Mbutton MRecycleBin">
+                    <span class="material-icons">delete</span>
+                    <div class="text">回收站</div>
+                </div>
+            </div>
+
+            <div class="MenuBarF">
+                <div class="HeadSculpture">
+                    <span class="material-icons">face</span>
+                </div>
+                <div>hello {{username}}</div>
+
+            </div>
+
+        </div>
+
+        <!-- 主题内容Content -->
+        <div class="Content">
+
+            <!-- ContentH主题内容的头部H -->
+            <div class="ContentH">
+
+                <!-- 这里是装路径元素的盒子 -->
+                <div class="path">
+                    <span class="PathTag" @click="EnterFolder">文件</span>
+                    <div class="FPath" v-for="item in Fpath">
+                        <span class="material-icons">chevron_right</span>
+                        <span class="Fname">{{item}}</span>
+                    </div>
+                </div>
+                <!-- ContentH主题内容的头部H的左边Left -->
+                <div class="ContentHL">
+                    <div class="lookup" @click="">
+                        <span class="material-icons">search</span>
+                    </div>
+                    <div class="operation" @click="">
+                        <!--operation操作-->
+                        <span class="material-icons">add_circle_outline</span>
+                        <div class="">
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- ContentB主题内容的身体B -->
+            <div class="ContentB">
+
+                <!-- Fitem文件或者文件夹F的模板item -->
+                <div class="Fitem" v-for="item in FData.folderAry" @dblclick="EnterFolder(item)">
+                    <div class="Fimg">
+                        <img src="img/folder.png">
+                    </div>
+
+                    <div class="DownList">
+                        <div class="material-icons" @click="DropDownList($event)">arrow_drop_up</div>
+
+                        <div class="DownListMenu">
+                            <ul type="none">
+                                <li><span class="starSpanSty material-icons">star</span>收藏</li>
+                                <!-- <li @mouseover="starIcon" @mouseout="starIcon_black"><img :src="starImg">收藏</li> -->
+                                <li><span class="deleteSpanSty material-icons">delete</span>删除</li>
+                                <li><span class="renameSpanSty material-icons">border_color</span>重命名</li>
+                                <li><span class="infoSpanSty material-icons">info</span>详情</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <span class="FolderN">{{item.folderName}}</span>
+                </div>
+
+                <!--测试-->
+
+
+                <!-- 开发文件item模板 -->
+                <div class="Fitem" v-for="item in test" :key="item" @dblclick="EnterFolder(item)">
+                    <div class="Fimg">
+                        <img src="img/folder.png">
+                    </div>
+
+                    <div class="DownList">
+                        <div class="material-icons" @click="DropDownList($event)">arrow_drop_up</div>
+
+                        <div class="DownListMenu">
+                            <ul type="none">
+                                <li><span class="starSpanSty material-icons">star</span>收藏</li>
+                                <li><span class="deleteSpanSty material-icons">delete</span>删除</li>
+                                <li><span class="renameSpanSty material-icons">border_color</span>重命名</li>
+                                <li><span class="infoSpanSty material-icons">info</span>详情</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <span class="FolderN">文件夹{{item}}</span>
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </div>
+</body>
+
+</html>
+
+<script>
+    var d; //d在这里是下拉菜单的dom元素
+    var downListS; //这里是存当前点击的下拉列表dom元素
+    var LastdownListS = new Array(); //这里是存上一个点击的下拉列表dom元素用数组方便存储上一个元素
+    var apiUrl = "http://10.10.226.44:8002/"
+    var app = new Vue({
+        el: "#app",
+        data: {
+            FData: {},
+            isDownListC: false,
+            username: "",
+            test: [1, 2, 3, 4],
+            addDownList: "",
+            EnterFolderPath: "",
+            Fpath: []
+        },
+        methods: {
+            getFInformation() { //information信息，FInformation文件信息
+                var that = this;
+
+                $.post({
+                    url: apiUrl + "Folders/ViewFolder?path=\\&folderPassWord=",
+                    data: {
+                        path: that.EnterFolderPath,
+                        folderPassWord: "",
+                        token: "3a71690a243b4338b0465e4bc096fe94"
+                    },
+                    // processData: false,
+                    success: (e) => {
+                        if (e.code == 200) {
+                            that.FData = e.data
+                            console.dir(that.FData)
+                        } else {
+                            console.log("获取文件失败")
+                            console.log(e)
+                        }
+                    }
+                })
+            },
+            Initial() {
+                var that = this;
+                that.isDownListC = false
+                if (d) {
+                    d.children[0].style.animationName = "DownListMenuBack" //给下拉菜单设置好dom元素的动画
+                    downListS.toElement.className = "material-icons"
+                }
+                d = "" //这里是为了实现点击空白的地方，收回下拉菜单，d在这里是下拉菜单的dom元素
+            },
+            getCookie(cname) {
+                var that = this;
+                var name = cname + "=";
+                var ca = document.cookie.split(';');
+                for (var i = 0; i < ca.length; i++) {
+                    var c = ca[i].trim();
+                    if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
+                }
+                return "";
+            },
+            DetectLogin() {
+                var that = this;
+                var d = that.getCookie("PublicSpace");
+                if (d == "") {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: "为检测到用户登录信息,请先登录",
+                        type: 'error',
+                        confirmButtonText: '确定'
+                    })
+                    window.location = "SignIn.html"
+                } else {
+                    var data = JSON.parse(d);
+                    that.username = data.UserName;
+                }
+            },
+            DropDownList(e) {
+                var that = this;
+                LastdownListS[1] = e; //这里的数组获取当前点击的元素
+                that.isDownListC = !that.isDownListC;
+                if (that.isDownListC && e.toElement.className == "material-icons") {
+                    // that.addDownList="addDownList"
+                    e.toElement.className += " addDownList" //这里直接获取dom元素来直接设置class，用vue的bind并不方便，点击一个元素，会把数组里的所有元素改变
+                } else {
+                    // that.addDownList=""
+                    e.toElement.className = "material-icons"
+                }
+
+
+                if (!d) {
+                    d = e.currentTarget.nextElementSibling
+                    if (that.isDownListC) {
+                        d.children[0].style.animationName = "DownListMenuCome"
+                    } else {
+                        d.children[0].style.animationName = "DownListMenuBack"
+                        d = ""
+                    }
+                } else {
+                    d.children[0].style.animationName = "DownListMenuBack"
+                    LastdownListS[0].toElement.className = "material-icons"
+                    d = ""
+                }
+                downListS = e;
+                LastdownListS[0] = downListS //这里最后再存一个当前元素，当下一次执行事件时，这里就是上一个元素了
+                e.stopPropagation();
+
+            },
+
+            EnterFolder(F) {
+                var that = this;
+                that.EnterFolderPath = F.folderPath;
+                that.getFInformation();
+                if (F.folderPath) {
+                    that.Fpath[that.Fpath.length] = that.EnterFolderPath;
+                } else {
+                    that.Fpath = [];
+                }
+                console.log(that.Fpath)
+                console.log(F)
+            },
+
+        },
+        mounted() {
+            var that = this;
+            that.getFInformation(); //获取文件夹
+            // that.DetectLogin(); //检测登录信息，检测浏览器cookie，如果没有就把页面跳到登录页面
+        }
+    })
+</script>

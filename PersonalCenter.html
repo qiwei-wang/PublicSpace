@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PublicSpace个人中心</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/ripple.css">
+    <link href="assets/css/material-dashboard.min.css?v=2.1.1" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="css/font.css" />
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/PersonalCenter.css">
+
+    <!-- <link rel="stylesheet" href="assets/scss/material-dashboard/plugins/_sweetalert2.scss"> -->
+    <!-- Bootstrap CSS -->
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
+    <script src="assets/js/plugins/sweetalert2.js"></script>
+    <script src="assets/js/core/jquery.min.js"></script>
+    <script src="js/vue.js"></script>
+    <script src="assets/js/jquery-3.6.0.min.js" type="text/javascript"></script>
+    <script src="//cdn.jsdelivr.net/npm/promise-polyfill@8/dist/polyfill.js"></script>
+    <!-- <script src="assets/js/plugins/perfect-scrollbar.jquery.min.js"></script> -->
+    <script>
+        // new PerfectScrollbar('#demo');
+        // swal({ title:"Good job!", text: "You clicked the button!", type: "success", buttonsStyling: false, confirmButtonClass: "btn btn-success"})
+    </script>
+</head>
+
+<body>
+    <div id="app">
+
+
+
+        <div class="header">
+            <nav class="navbar navbar-expand-lg bg-dark">
+                <div class="container">
+                    <a class="navbar-brand" href="#"><img src="img/PublicSpaceIcon.png" style="width: 50px;"></a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="navbar-toggler-bar navbar-kebab"></span>
+                                <span class="navbar-toggler-bar navbar-kebab"></span>
+                                <span class="navbar-toggler-bar navbar-kebab"></span>
+                            </button>
+                    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                        <ul class="navbar-nav">
+                            <li class="nav-item active" onclick="">
+                                <a class="nav-link" href="#">home <span class="sr-only">(current)</span></a>
+                            </li>
+
+
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            下拉链接
+                                        </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                    <a class="dropdown-item" href="#">这里是空的</a>
+                                    <a class="dropdown-item" href="#">设置</a>
+                                    <a class="dropdown-item" href="#">还有别的什么</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- 登录 -->
+
+                    <div id="navright" v-if="!isSignin">
+                        <a id="dlbutton" @click="LoginWindow">
+                            <i class="material-icons">face</i>登陆
+                        </a>
+                        <a id="dlbutton" href="registered.html" target="view_window">
+                                    注册
+                        </a>
+                        <!-- <a id="dlbutton" @clikc="zhuce()" :href="ZCUrl">
+                            注册
+                        </a> -->
+                    </div>
+
+                    <div id="navright2" v-if="isSignin">
+                        <a id="dlbutton">
+                            <i class="material-icons">face</i>
+                            <span id="username">{{UserName}}</span>
+                        </a>
+
+                        <a id="dlbutton" @click="delCookie()">
+                            <span id="zhux">退出登录</span>
+                        </a>
+                    </div>
+
+                </div>
+            </nav>
+        </div>
+
+        <div id="SigninWindow" class="SigninWindow" :style="{width:SigninWW}">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">用户登录</h4>
+                    <button type="submit" class="btn btn-just-icon btn-round" @click="LoginWindow">
+                            <i class="material-icons">keyboard_arrow_right</i>
+                        </button>
+                </div>
+
+                <div class="card-body">
+                    <div class="form-group has-label">
+                        <label>
+                                    用户名：
+                                </label>
+                        <input class="form-control" type="text" required="true" id="userName" placeholder="请输入用户名" v-model="UserName">
+                    </div>
+
+                </div>
+
+                <div class="card-body">
+                    <div class="form-group has-label">
+                        <label>
+                                    密码：
+                                </label>
+                        <input class="form-control" type="password" required="true" id="passWord" placeholder="请输入密码" v-model="PassWord">
+                    </div>
+
+                </div>
+
+                <div class="SubmitBox">
+                    <button type="submit" class="btn btn-default SubmitBox" @click="Signin()">提交</button>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="all">
+            <div class="left">
+                <ul class="nav nav-pills">
+                    <li role="presentation">
+                        <a href="javascript:void(0);" class="ripple">
+                            <div class="HeadPortrait">
+                                <i class="material-icons">face</i>
+                                <div class="Username">契威</div>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+
+                <div>
+                    <ul class="nav nav-pills">
+                        <li role="presentation"><a href="javascript:void(0);" class="ripple">密码</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <ul class="nav nav-pills">
+                        <li role="presentation"><a href="javascript:void(0);" class="ripple">下载记录</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <ul class="nav nav-pills">
+                        <li role="presentation"><a href="javascript:void(0);" class="ripple">上传记录</a></li>
+                    </ul>
+                </div>
+
+            </div>
+            <div class="main">
+
+                <div class="HeadPortrait">
+                    <i class="material-icons">face</i>
+                </div>
+                <div class="Username">契威</div>
+
+            </div>
+        </div>
+
+
+
+    </div>
+</body>
+
+</html>
+
+<script>
+    var apiUrl = "http://string.cn1.utools.club/"
+    var app = new Vue({
+        el: "#app",
+        data: {
+            isSignin: false,
+            SigninWW: "0px",
+            UserName: "",
+            PassWord: "",
+            // ZCUrl: "#",
+            // ZCButton: true
+        },
+        methods: {
+            setCookie(cname, cvalue, exdays) {
+                var d = new Date();
+                d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+                var expires = "expires=" + d.toGMTString();
+                document.cookie = cname + "=" + cvalue + "; " + expires;
+            },
+            getCookie(cname) {
+                var that = this;
+                var name = cname + "=";
+                var ca = document.cookie.split(';');
+                for (var i = 0; i < ca.length; i++) {
+                    var c = ca[i].trim();
+                    if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
+                }
+                return "";
+            },
+            Detectlogin() {
+                var that = this;
+                var d = that.getCookie("userinfo");
+                if (d == "") {
+                    console.log("未检测到token");
+                    that.isSignin = false;
+                } else {
+                    var data = JSON.parse(d);
+                    console.dir("浏览器token:" + data);
+                    that.userInfo = {
+                        "token": data.token,
+                        "userName": data.userName
+                    };
+                    that.UserName = data.userName;
+                    that.isSignin = true;
+                }
+                that.zhuce();
+            },
+            LoginWindow() {
+                var that = this;
+                if (that.SigninWW == "0px") {
+                    that.SigninWW = "500px"
+                } else {
+                    that.SigninWW = "0px"
+                }
+
+            },
+            delCookie() {
+                var that = this;
+                that.ZCButton = false;
+                document.cookie = "userinfo=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+                Swal.fire({
+                    title: '成功退出登录',
+                    type: 'success',
+                    confirmButtonText: '确定'
+                })
+                setTimeout(() => {
+                    that.isSignin = false;
+                }, 200);
+
+                that.UserName = "";
+                // that.ZCUrl = "#";
+                // setTimeout(() => {
+                //     that.zhuce();
+                // }, 400);
+            },
+            Signin() {
+                var that = this;
+                if (that.UserName != "" && that.PassWord != "") {
+                    $.post({
+                        url: apiUrl + "login",
+                        data: {
+                            userName: that.UserName,
+                            passWord: that.PassWord,
+                        },
+                        success: function(e) {
+                            if (e.code == 200) {
+                                Swal({
+                                    position: 'center',
+                                    type: 'success',
+                                    title: '登陆成功',
+                                    showConfirmButton: false,
+                                    timer: 1000
+                                })
+                                that.SigninWW = "0px"; //隐藏登录窗口
+                                that.isSignin = true;
+                                that.UserName = e.data.userName;
+                                console.log(that.UserName);
+
+                                that.userInfo = {
+                                    "token": e.data.token,
+                                    "userName": e.data.userName
+                                };
+                                var userInfo = {
+                                    "token": e.data.token,
+                                    "userName": e.data.userName
+                                };
+                                var saveStr = JSON.stringify(userInfo);
+
+
+                                that.setCookie("userinfo", saveStr, 3);
+
+                                // that.();
+                            } else {
+                                Swal.fire({
+                                    title: 'Error!',
+                                    text: '登录失败，请联系开发人员',
+                                    type: 'error',
+                                    confirmButtonText: '确定'
+                                })
+                            }
+                        }
+                    })
+                } else {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: '账号或者密码不能为空',
+                        type: 'error',
+                        confirmButtonText: '确定'
+                    })
+                }
+            },
+            // zhuce() {
+            //     var that = this;
+            //     console.log(that.isSignin)
+            //     if (that.isSignin == false) {
+            //         that.ZCUrl = "registered.html";
+            //     }
+            // },
+        },
+        mounted() {
+            var that = this;
+            that.Detectlogin();
+        }
+    })
+</script>
+
+
+<!--   Core JS Files   -->
+<script src="assets/js/core/popper.min.js " type="text/javascript "></script>
+<script src="assets/js/core/bootstrap-material-design.min.js " type="text/javascript "></script>
+<script src="assets/js/plugins/perfect-scrollbar.jquery.min.js "></script>
+<!-- Chartist JS -->
+<script src="assets/js/plugins/chartist.min.js "></script>
+<!--  Notifications Plugin    -->
+<script src="assets/js/plugins/bootstrap-notify.js "></script>
+<!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
+<!-- <script src="assets/js/material-dashboard.js?v=2.1.1 " type="text/javascript "></script>未知错误,此行注释 -->

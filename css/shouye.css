@@ -1,0 +1,355 @@
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+html {
+    background-color: rgb(245, 245, 245);
+}
+
+#app {
+    display: flex;
+    height: 100vh;
+}
+
+img {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+.MenuBar {
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+    background-color: #000;
+    color: #fff;
+    padding: 5px 10px;
+    box-sizing: content-box;
+}
+
+.MenuBarH {
+    display: flex;
+    justify-content: center;
+    padding-top: 10px;
+    padding-bottom: 20px;
+}
+
+.MenuBarH span {
+    font-size: 1.15em;
+    margin: auto 0;
+}
+
+.MenuBarB {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.MenuBarB .Mbutton {
+    width: 180px;
+    height: 40px;
+    padding: 5px;
+    margin: 5px;
+    border-radius: 8px;
+    display: flex;
+    color: rgb(218, 218, 218);
+    transition: .3s;
+    cursor: pointer;
+    box-sizing: content-box;
+}
+
+.Mbutton:hover {
+    color: #fff;
+    background-color: #61BFFF;
+}
+
+.Mbutton:hover .material-icons {
+    margin-right: 10px;
+}
+
+.MenuBarB .Mbutton .text {
+    line-height: 2.25rem;
+}
+
+.MenuBarB .material-icons {
+    margin-right: 5px;
+    padding-top: 5px;
+    transition: .3s;
+}
+
+.MenuBarF {
+    margin: 0 auto;
+    width: 200px;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    border-radius: 15px;
+    margin-top: auto;
+    align-items: center;
+}
+
+.MenuBarF .HeadSculpture {
+    width: 75px;
+    height: 75px;
+    border-radius: 75px;
+    border: 2px solid #fff;
+    line-height: 75px;
+    text-align: center;
+    margin: 10px auto;
+    box-sizing: content-box;
+}
+
+.MenuBarF .HeadSculpture .material-icons {
+    font-size: 75px;
+}
+
+.Content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 40px;
+}
+
+.Content .ContentH {
+    display: flex;
+    justify-content: space-between;
+}
+
+.Content .ContentH .path {
+    line-height: 300%;
+    display: flex;
+    /* 垂直居中？？ */
+}
+
+.Content .ContentH .path .PathTag {
+    color: rgb(156, 156, 156);
+    font-size: 1.25em;
+    cursor: pointer;
+    transition: .5s;
+}
+
+.Content .ContentH .path .PathTag:hover {
+    color: #000;
+}
+
+.Content .ContentH .path .FPath {
+    display: flex;
+    align-items: center;
+}
+
+.Content .ContentH .path .FPath .Fname {
+    height: 15px;
+    font-size: 15px;
+    box-sizing: unset;
+    border-radius: 3px;
+    line-height: 100%;
+    padding: 4px;
+    cursor: pointer;
+    transition: .5s;
+}
+
+.Content .ContentH .path .FPath .Fname:hover {
+    background-color: #F44336;
+    color: #fff;
+}
+
+.Content .ContentH .path .FPath .material-icons {
+    font-size: 16px;
+}
+
+.Content .ContentH .ContentHL {
+    display: flex;
+    align-items: center;
+}
+
+.Content .ContentH .lookup {
+    width: 30px;
+    height: 30px;
+    margin: 0px 5px;
+    cursor: pointer;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: .3s;
+}
+
+.Content .ContentH .lookup:hover {
+    background-color: #673AB7;
+    color: #fff;
+}
+
+.Content .ContentH .operation {
+    width: 30px;
+    height: 30px;
+    margin: 0px 5px;
+    cursor: pointer;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: .3s;
+}
+
+.Content .ContentH .operation:hover {
+    background-color: #673AB7;
+    color: #fff;
+}
+
+.ContentB {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 110px);
+    height: 140px;
+    gap: 30px;
+    margin-top: 20px;
+}
+
+.ContentB .Fitem {
+    position: relative;
+    width: 100px;
+    height: 140px;
+    margin: auto;
+    text-align: center;
+    cursor: pointer;
+}
+
+.ContentB .Fitem .Fimg {
+    background-color: rgba(255, 255, 255, 0);
+    transition: .3s;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.ContentB .Fitem:hover>.Fimg {
+    filter: drop-shadow(0px 15px 5px #a3a3a3);
+    transform: translateY(-0.75rem) rotateZ(-10deg);
+}
+
+.Fitem .DownList {
+    position: absolute;
+    margin-top: -115px;
+    margin-left: 80px;
+    height: 30px;
+    border: 0;
+    background: rgba(255, 255, 255, 0);
+    color: #a3a3a3;
+    padding: 3px;
+    transition: .6s;
+    z-index: 99999;
+    border-radius: 3px;
+}
+
+.Fitem .addDownList {
+    transition: .5s;
+    transform: rotateZ(-180deg);
+    -webkit-transform: rotateZ(-180deg);
+}
+
+.Fitem .DownList .material-icons {
+    transition: .5s;
+    width: 24px;
+    height: 24px;
+    font-size: 24px;
+}
+
+.Fitem .DownList:hover {
+    color: #000;
+    background: rgba(255, 255, 255, 0.7);
+}
+
+.Fitem .DownListMenu {
+    position: absolute;
+    left: -10px;
+    min-width: 48px;
+    z-index: 1;
+}
+
+.Fitem .DownListMenu ul {
+    min-width: 100px;
+    padding: 5px;
+    position: absolute;
+    background-color: #fff;
+    opacity: 0;
+    border-radius: 5px;
+    /* animation-name:DownListMenuCome; */
+    animation-duration: .5s;
+    animation-delay: 0s;
+    animation-fill-mode: forwards;
+    box-shadow: 0 0 1px 1px rgb(28 28 32 / 5%), 0 8px 24px rgb(28 28 32 / 12%) !important;
+}
+
+@keyframes DownListMenuCome {
+    0% {
+        opacity: 0;
+        height: 0px;
+    }
+    100% {
+        height: 155px;
+        opacity: 1;
+    }
+}
+
+@keyframes DownListMenuBack {
+    0% {
+        height: 155px;
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        height: 0px;
+    }
+}
+
+.Fitem .DownListMenu li {
+    display: flex;
+    text-align: right;
+    padding: 3px;
+    color: #000;
+    margin: 5px auto;
+    transition: .5s;
+    border-radius: 3px;
+}
+
+.Fitem .DownListMenu li:hover {
+    background-color: rgb(230, 230, 230);
+}
+
+.Fitem .DownListMenu li .material-icons {
+    display: inline-block;
+    transition: .3s;
+}
+
+.Fitem .DownListMenu li:hover .starSpanSty {
+    color: #FB8C00;
+    margin-right: 3px;
+}
+
+.Fitem .DownListMenu li:hover .deleteSpanSty {
+    color: #00c9fb;
+    margin-right: 3px;
+}
+
+.Fitem .DownListMenu li .renameSpanSty {
+    font-size: 20px;
+    margin-right: 3px;
+}
+
+.Fitem .DownListMenu li:hover .renameSpanSty {
+    color: #fb0075;
+    margin-right: 6px;
+}
+
+.Fitem .DownListMenu li:hover .infoSpanSty {
+    color: #d500fb;
+    margin-right: 6px;
+}
+
+.Fitem .FolderN {
+    display: inline-block;
+    margin-top: 15px;
+}

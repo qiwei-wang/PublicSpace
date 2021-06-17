@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="assets/css/material-dashboard.min.css?v=2.1.1" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="css/font.css" />
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/css.css">
+    <script src="assets/js/core/jquery.min.js"></script>
+    <script src="js/vue.js"></script>
+</head>
+
+<body>
+    路径
+    <input type="text" value="" id="path"><br/>
+    <input type="file" value="选择文件" id="file">
+    <input type="button" onclick="sendFile()" value="上传">
+</body>
+
+</html>
+<script src="js/jquery-3.6.0.min.js"></script>
+<script>
+    function sendFile() {
+        var  fileObj  =  document.getElementById("file").files[0];        
+        var  form  =  new  FormData();  // FormData 对象
+                
+        form.append("file",  fileObj);  // 文件对象
+        form.append("token",  null);
+        form.append("path", $("#path").val())
+        $.post({
+            url: "http://10.10.226.44:5001/uploadFiles",
+            data: form,
+            contentType: false,
+            processData: false,
+            success: (e) => {
+                alert(e['code'] + "\r\n" + e['msg'] + "\r\n" + e["data"])
+                console.dir(e)
+            }
+        })
+    }
+</script>
+<script src="assets/js/core/popper.min.js" type="text/javascript"></script>
+<script src="assets/js/core/bootstrap-material-design.min.js" type="text/javascript"></script>
+<script src="assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+<!-- Chartist JS -->
+<script src="assets/js/plugins/chartist.min.js"></script>
+<!--  Notifications Plugin    -->
+<script src="assets/js/plugins/bootstrap-notify.js"></script>
+<!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
+<script src="assets/js/material-dashboard.js?v=2.1.1" type="text/javascript"></script>
+<script src="js/js.js" type="text/javascript"></script>
+<script src="assets/js/jquery-3.6.0.min.js" type="text/javascript"></script>

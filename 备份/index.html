@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="assets/css/material-dashboard.min.css?v=2.1.1" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="css/font.css" />
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/css.css">
+    <script src="assets/js/core/jquery.min.js"></script>
+    <script src="js/vue.js"></script>
+
+</head>
+
+<body>
+    <div id="app">
+        <nav class="navbar navbar-expand-lg bg-dark">
+            <div class="container">
+                <a class="navbar-brand" href="#"><img src="img/PublicSpaceIcon.png" style="width: 50px;"></a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-bar navbar-kebab"></span>
+                    <span class="navbar-toggler-bar navbar-kebab"></span>
+                    <span class="navbar-toggler-bar navbar-kebab"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                    <ul class="navbar-nav">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="#">home <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">特征</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">价钱</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                下拉链接
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <a class="dropdown-item" href="#">这里是空的</a>
+                                <a class="dropdown-item" href="#">设置</a>
+                                <a class="dropdown-item" href="#">还有别的什么</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- 登录 -->
+                <a id="dlbutton" href="#">
+                    <i class="material-icons">face</i>登陆
+                </a>
+
+            </div>
+        </nav>
+        <div class="bd">
+            <!-- 搜索栏 -->
+            <div class="LeftInformation" id="LeftInformation">
+                <i class="material-icons">face</i>
+                <span>用户名</span>
+                <table>
+                    <tr>
+                        <td>上传日期:</td>
+                        <td>2021-04-03</td>
+                    </tr>
+                    <tr>
+                        <td>修改日期:</td>
+                        <td>2021-04-03</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="search">
+                <div class="searchbox" id="SearchBox">
+                    <form class="form-inline ml-auto">
+                        <div class="form-group no-border">
+                            <input type="text" class="form-control" placeholder="Search" id="SearchInput">
+                        </div>
+                        <button type="submit" class="btn btn-just-icon btn-round">
+                            <i class="material-icons">search</i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <!-- 文件显示 -->
+            <div class="bodyer">
+
+                <div class="main">
+                    <div style="width: 100%;">
+                        <div class="mainhead ">
+                            <button type="submit" class="btn btn-just-icon btn-round" @click="getUpOneLevel(item)">
+                                <i class="material-icons">keyboard_arrow_left</i>
+                            </button>
+
+                            <nav aria-label="breadcrumb" role="navigation">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="#" @click="shouye()">首页</a></li>
+
+                                    <li class="breadcrumb-item">
+                                        <a href="#"></a>453</li>
+                                    <li class="breadcrumb-item active" aria-current="page">45345</li>
+                                </ol>
+                            </nav>
+                        </div>
+
+                        <div class="folderBox">
+                            <div class="folder" v-for="item in filesData.folderAry" @dblclick="getSubfolders(item)" onclick="checkFolders()">
+                                <img src="img/folder.png">
+                                <span style="white-space:nowrap">{{item.folderName}}</span>
+                            </div>
+                            <div class="folder" onclick="checkFolders()">
+                                <img src="img/folder.png">
+                                <span style="white-space:nowrap">压缩包</span>
+                            </div>
+                            <div class="folder" onclick="checkFolders()">
+                                <img src="img/txt.png">
+                                <span style="white-space:nowrap">文本txt</span>
+                            </div>
+                            <div class="folder" onclick="checkFolders()">
+                                <img src="img/unknow.png">
+                                <span style="white-space:nowrap">未知文件类型</span>
+                            </div>
+                            <div class="folder" onclick="checkFolders()">
+                                <img src="img/word.png">
+                                <span style="white-space:nowrap">word</span>
+                            </div>
+                            <div class="folder" onclick="checkFolders()">
+                                <img src="img/excel.png">
+                                <span style="white-space:nowrap">excel</span>
+                            </div>
+                            <div class="folder" onclick="checkFolders()">
+                                <img src="img/ppt.png">
+                                <span style="white-space:nowrap">ppt</span>
+                            </div>
+                            <div class="folder" onclick="checkFolders()">
+                                <img src="img/file_music.png">
+                                <span style="white-space:nowrap">music</span>
+                            </div>
+                            <div class="folder" onclick="checkFolders()">
+                                <img src="img/video.png">
+                                <span style="white-space:nowrap">video</span>
+                            </div>
+                            <!-- <div class="folder">
+                            <img src="img/folder.png">
+                            <span style="white-space:nowrap">共享文件夹</span>-->
+
+                            <div class="fakeFolder"></div>
+                            <div class="fakeFolder"></div>
+                            <div class="fakeFolder"></div>
+                            <div class="fakeFolder"></div>
+                            <div class="fakeFolder"></div>
+                            <div class="fakeFolder"></div>
+
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="pagebox">
+                        <nav class="page">
+                            <ul class="page-ul">
+                                <li class="pageitem"><a class="pagelink" href="#">以前</a></li>
+                                <li class="pageitem"><a class="pagelink" href="#">1</a></li>
+                                <li class="pageitem"><a class="pagelink" href="#">2</a></li>
+                                <li class="pageitem"><a class="pagelink" href="#">3</a></li>
+                                <li class="pageitem"><a class="pagelink" href="#">下一个</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+</html>
+
+<script>
+    var apiUrl = "http://10.10.226.44:5001/"
+    var app = new Vue({
+        el: '#app',
+        data: {
+            rootPath: "/", //hzy盘地址路径为空
+            // rootPath: "E://Files",//wj盘地址路径
+            filesData: {},
+            SubfoldersName: ""
+        },
+        methods: {
+            getFolder(folderName) {
+                var that = this;
+                if (!folderName) folderName = "/";
+                $.post({
+                    url: apiUrl + "viewFolder",
+                    data: {
+                        path: folderName
+                    },
+                    success: (e) => {
+                        console.log(e)
+                        that.filesData = e;
+                    }
+                })
+            },
+            getSubfolders(e) {
+                var that = this;
+                SubfoldersName = e;
+                console.log(SubfoldersName);
+                // that.getFolder("//"+SubfoldersName);//wj本地路径
+                that.getFolder(SubfoldersName); //hzy路径
+            },
+            shouye() {
+                var that = this;
+                that.getFolder();
+            },
+            getSubfolders2(item) {
+                var that = this;
+                if (item.folderPath != "/") {
+                    temp = item.folderPath + "/";
+                } else {
+                    temp = item.folderPath;
+                }
+                that.getSubfolders(temp + item.folderName)
+            },
+            getUpOneLevel() {
+                var that = this;
+
+            }
+        },
+        mounted() {
+            var that = this;
+            that.getFolder();
+
+            // setInterval(() => {
+            //     that.getFolder();
+            // }, 1000)
+        }
+    })
+</script>
+
+
+<!--   Core JS Files   -->
+<script src="assets/js/core/popper.min.js" type="text/javascript"></script>
+<script src="assets/js/core/bootstrap-material-design.min.js" type="text/javascript"></script>
+<script src="assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+<!-- Chartist JS -->
+<script src="assets/js/plugins/chartist.min.js"></script>
+<!--  Notifications Plugin    -->
+<script src="assets/js/plugins/bootstrap-notify.js"></script>
+<!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
+<script src="assets/js/material-dashboard.js?v=2.1.1" type="text/javascript"></script>
+<script src="js/js.js" type="text/javascript"></script>
+<script src="assets/js/jquery-3.6.0.min.js" type="text/javascript"></script>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="js/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+    文件路径<input type="text" id="txt">
+    <input type="button" onclick="download()" value="下载">
+</body>
+
+</html>
+<script>
+    function download() {
+        $.ajax({
+            url: "http://10.10.226.44:5001/downloadFile",
+            data: {
+                path: $("#txt").val()
+            },
+            success: (e) => {
+                alert(e['code'] + "\r\n" + e['msg'] + "\r\n" + e["data"])
+                console.dir(e)
+            }
+        })
+    }
+</script>

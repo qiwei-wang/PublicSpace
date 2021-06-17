@@ -1,0 +1,1428 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PublicSpace</title>
+    <link href="assets/css/material-dashboard.min.css?v=2.1.1" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="css/font.css" />
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/css.css">
+    <!-- <link rel="stylesheet" href="assets/scss/material-dashboard/plugins/_sweetalert2.scss"> -->
+    <!-- Bootstrap CSS -->
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
+    <script src="assets/js/plugins/sweetalert2.js"></script>
+    <script src="assets/js/core/jquery.min.js"></script>
+    <script src="js/vue.js"></script>
+    <script src="assets/js/jquery-3.6.0.min.js" type="text/javascript"></script>
+    <script src="//cdn.jsdelivr.net/npm/promise-polyfill@8/dist/polyfill.js"></script>
+    <!-- <script src="assets/js/plugins/perfect-scrollbar.jquery.min.js"></script> -->
+    <script>
+        // new PerfectScrollbar('#demo');
+        // swal({ title:"Good job!", text: "You clicked the button!", type: "success", buttonsStyling: false, confirmButtonClass: "btn btn-success"})
+    </script>
+</head>
+
+<body>
+    <div id="demo"></div>
+
+    <div id="app">
+        <nav class="navbar navbar-expand-lg bg-dark">
+            <div class="container">
+                <a class="navbar-brand" href="#" href="javascript:void(0)"><img src="img/PublicSpaceIcon.png" style="width: 50px;"></a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-bar navbar-kebab"></span>
+                    <span class="navbar-toggler-bar navbar-kebab"></span>
+                    <span class="navbar-toggler-bar navbar-kebab"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                    <ul class="navbar-nav">
+                        <li class="nav-item active" onclick="">
+                            <a class="nav-link" href="#">home <span class="sr-only">(current)</span></a>
+                        </li>
+
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                下拉链接
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <a class="dropdown-item" href="#">这里是空的</a>
+                                <a class="dropdown-item" href="#">设置</a>
+                                <a class="dropdown-item" href="#">还有别的什么</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <!-- 登录 -->
+
+                <div class="navright" id="navright" v-if="!isSignin">
+                    <a id="dlbutton" @click="GetLoginInformation()">
+                        <i class="material-icons">face</i>登陆
+                    </a>
+                    <a id="dlbutton" href="#" @click="goZc()">
+                        <!-- <router-link to='registered.html'>
+                            注册
+                        </router-link> -->
+                        注册
+                    </a>
+                </div>
+
+                <div class="cknavright2" id="navright2" v-if="isSignin">
+                    <a id="dlbutton" href="#" @click="GetLoginInformation()">
+                        <i class="material-icons">face</i>
+                        <span id="username">{{UserName}}</span>
+                    </a>
+
+                    <a id="dlbutton" @click="delCookie()">
+                        <span id="zhux">退出登录</span>
+                    </a>
+                </div>
+
+            </div>
+        </nav>
+
+        <div class="bd">
+            <!-- 搜索栏 -->
+            <div class="LeftInformation" id="LeftInformation">
+                <i class="material-icons">face</i>
+                <span>{{FolderUserName}}</span>
+                <table>
+                    <tr>
+                        <td>上传日期:</td>
+                        <td>{{createTime}}</td>
+                    </tr>
+                    <tr>
+                        <td>修改日期:</td>
+                        <td>{{updateTime}}</td>
+                    </tr>
+                    <tr>
+                        <td>当前选中:</td>
+                        <td> <span id="CheckSpan">789</span></td>
+                    </tr>
+                </table>
+                <button type="button" class="btn btn-default" @click="getDownload()" id="dowButton">下载</button>
+                <br/>
+                <button class="btn btn-default btn-fill" @click="ShareFolder()" id="shareButton">分享</button>
+                <br/>
+                <button class="btn btn-default btn-fill CancelShareButton" @click="CancelShareFolder()" id="CancelShareButton" v-bind:style="{left: CShareButton}">取消分享</button>
+                <br/>
+                <button class="btn btn-default btn-fill" @click="DeleteFolder()" id="deleteButton" v-bind:style="{top: dButton}">删除</button>
+
+            </div>
+            <!-- <div class="search">
+                <div class="searchbox" id="SearchBox">
+                    <form class="form-inline ml-auto">
+                        <div class="form-group no-border">
+                            <input type="text" class="form-control" placeholder="Search" id="SearchInput">
+                        </div>
+                        <button type="submit" class="btn btn-just-icon btn-round">
+                            <i class="material-icons">search</i>
+                        </button>
+                    </form>
+                </div>
+            </div> -->
+            <!-- 文件显示 -->
+            <div class="bodyer">
+
+                <div class="PopupCFolder" id="PopupCFolder">
+                    <div id="RegisterValidation">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">新建文件夹</h4>
+                                <button type="submit" class="btn btn-just-icon btn-round" onclick="comeback()">
+                                    <i class="material-icons">keyboard_arrow_right</i>
+                                </button>
+                            </div>
+
+                            <div class="card-body">
+                                <div class="form-group has-label">
+                                    <label>
+                                            文件名：
+                                        </label>
+                                    <input class="form-control" name="UserName" type="text" required="true" id="newFolderName" v-model="newFolderName">
+                                </div>
+
+                            </div>
+
+
+                            <div class="card-footer text-right">
+                                <div class="form-check pull-left">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="checkbox" value="1" v-model="checkReadOnly" checked >
+                                        你愿意让别人修改你的个人文件夹吗？（选择即视为同意）
+                                        <span class="form-check-sign">
+                                            <span class="check"></span>
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="card-footer text-right">
+                                <div class="form-check pull-left">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="checkbox" value="1" v-model="checkEncryption" id="encryption" onclick="encryptionbox()">
+                                        你想加密你的文件夹吗？
+                                        <span class="form-check-sign">
+                                            <span class="check"></span>
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="FolderPassBox" id="FolderPassBox">
+                                <div class="card-body">
+                                    <div class="form-group has-label">
+                                        <label>
+                                                请输入文件夹密码：
+                                                *
+                                            </label>
+                                        <input class="form-control" name="Folderpassword" id="FolderpassWord" type="password" required="true" v-model="FolderPassWord">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="SubmitBox">
+                                <button type="submit" class="btn btn-default" @click="getCFolderInformation()">提交</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="card">
+                    <div class="card-body">
+                        这是卡体内的一些文字
+                    </div>
+                </div> -->
+
+                <div id="SigninWindow" class="SigninWindow" :style="{left:ComeButton.left,width:ComeButton.width,padding:ComeButton.padding}">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">用户登录</h4>
+                            <button type="submit" class="btn btn-just-icon btn-round" @click='comeback()'>
+                                <i class="material-icons">keyboard_arrow_right</i>
+                            </button>
+                        </div>
+
+                        <div class="card-body">
+                            <div class="form-group has-label">
+                                <label>
+                                        用户名：
+                                    </label>
+                                <input class="form-control" type="text" required="true" id="userName" placeholder="请输入用户名">
+                            </div>
+
+                        </div>
+
+                        <div class="card-body">
+                            <div class="form-group has-label">
+                                <label>
+                                        密码：
+                                    </label>
+                                <input class="form-control" type="password" required="true" id="passWord" placeholder="请输入密码">
+                            </div>
+
+                        </div>
+
+                        <div class="SubmitBox">
+                            <button type="submit" class="btn btn-default" @click="Signin()">提交</button>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="allbox">
+
+
+                    <div class="FileBox">
+
+                        <div class="FiledirectoryBox">
+                            <!-- 文件目录 -->
+                            <nav aria-label="breadcrumb" role="navigation">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="#" @click="shouye()">首页</a></li>
+
+                                    <li class="breadcrumb-item" v-for="item,index in pathArr" @click="JumpFolder(index)">
+                                        <a href="#">{{item}}</a>
+                                    </li>
+                                </ol>
+                            </nav>
+
+                        </div>
+
+                    </div>
+
+                    <div class="main" onclick="backLeft()">
+                        <div style="width: 100%;" class="fileBox" id="drop-area">
+                            <div class="mainhead">
+
+                                <div class="MainButtonBox" v-if="isHome">
+
+                                    <button type="submit" class="btn btn-just-icon btn-round" @click="getUpOneLevel()">
+                                    <i class="material-icons">keyboard_arrow_left</i>
+                                </button>
+                                    <a href="javascript:;" class="file">上传文件
+                                    <input type="file" name="" id="file" @change="uploadfile">
+                                    <!-- <input type="text" id="Path" value=""> -->
+                                </a>
+
+                                    <a href="javascript:;" class="file" onclick="Popupinformation()">新建文件夹
+                                    <input type="text" name="" id="file">
+                                    <!-- <input type="text" id="Path" value=""> -->
+                                </a>
+                                </div>
+
+
+                            </div>
+
+                            <div class="folderBox">
+                                <div class="folder" v-for="item,index in filesData.folderAry" v-if="filesData" @dblclick="getSubfolders(item)" @click="getFolderInfo(item.folderName,item.IsShare,item)" onclick="checkFolders(this)" :key="item.id" :id='getFolderId(index)'>
+
+                                    <img src="img/folder.png">
+                                    <span style="white-space:nowrap">{{item.folderName}}</span>
+                                    <img class="fImgIcon" src="img/shareicon.gif" v-if="item.IsShare">
+
+                                </div>
+                                <div class="folder" v-for="item,index in filesData.fileAry" v-if="filesData" @dblclick="getSubfolders(item)" @click="getDownloadPath(item.fileName)" onclick="checkFile(this)" :key="item.id" :id='getFileId(index)'>
+                                    <img :src="getFileIcon(item.fileName)">
+                                    <span style="white-space:nowrap">{{item.fileName.slice(0,8)+'..'}}</span>
+
+                                </div>
+
+                                <div class="folder" onclick="checkFolders()">
+                                    <img src="img/folder.png">
+                                    <img class="fImgIcon" src="img/shareicon.gif">
+                                    <span style="white-space:nowrap">文件夹</span>
+                                </div>
+                                <!-- -->
+
+                                <div class="folder " onclick="checkFolders() ">
+                                    <img src="img/txt.png ">
+                                    <span style="white-space:nowrap ">文本txt</span>
+                                </div>
+                                <!--
+                            <div class="folder " onclick="checkFolders() ">
+                                <img src="img/unknow.png ">
+                                <span style="white-space:nowrap ">未知文件类型</span>
+                            </div>
+                            <div class="folder " onclick="checkFolders() ">
+                                <img src="img/word.png ">
+                                <span style="white-space:nowrap ">word</span>
+                            </div>
+                            <div class="folder " onclick="checkFolders() ">
+                                <img src="img/excel.png ">
+                                <span style="white-space:nowrap ">excel</span>
+                            </div>
+                            <div class="folder " onclick="checkFolders() ">
+                                <img src="img/ppt.png ">
+                                <span style="white-space:nowrap ">ppt</span>
+                            </div>
+                            <div class="folder " onclick="checkFolders() ">
+                                <img src="img/file_music.png ">
+                                <span style="white-space:nowrap ">music</span>
+                            </div>
+                            <div class="folder " onclick="checkFolders() ">
+                                <img src="img/video.png ">
+                                <span style="white-space:nowrap ">video</span>
+                            </div>
+                            <div class="folder " onclick="checkFolders() ">
+                                <img src="img/exe.png ">
+                                <span style="white-space:nowrap ">exe</span>
+                            </div> -->
+                                <!-- <div class="folder ">
+                            <img src="img/folder.png ">
+                            <span style="white-space:nowrap ">共享文件夹</span>-->
+
+                                <div class="fakeFolder "></div>
+                                <div class="fakeFolder "></div>
+                                <div class="fakeFolder "></div>
+                                <div class="fakeFolder "></div>
+                                <div class="fakeFolder "></div>
+                                <div class="fakeFolder "></div>
+
+                            </div>
+
+
+                        </div>
+
+
+                        <div class="pagebox ">
+                            <nav aria-label="Page navigation example ">
+                                <ul class="pagination ">
+                                    <li class="page-item "><a class="page-link " href="# ">上一个</a></li>
+                                    <li class="page-item "><a class="page-link " href="# ">1</a></li>
+                                    <li class="page-item "><a class="page-link " href="# ">2</a></li>
+                                    <li class="page-item "><a class="page-link " href="# ">3</a></li>
+                                    <li class="page-item "><a class="page-link " href="# ">下一个</a></li>
+                                </ul>
+                            </nav>
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+                <div :class='progressBoxClass'>
+                    <div class="progress-container progress-success">
+                        <span class="progress-badge">文件上传中</span>
+                        <div class="progress" style="height: 8px;">
+                            <div class="progress-bar progress-bar-striped progress-bar-success progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+                                <!-- 16% -->
+                                <!-- 65% -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+</html>
+
+<script>
+    // var apiUrl = "http://10.10.226.52:8001/"
+    var apiUrl = "http://10.10.226.44:8001/"
+        // apiUrl = "http://10.10.226.44:8001/"
+        // var apiUrl = "http://string.cn1.utools.club/"
+    var app = new Vue({
+        el: '#app',
+        data() {
+            return {
+                dropActive: false
+            }
+        },
+        data: {
+            rootPath: "/", //hzy盘地址路径为空
+            // rootPath: "E://Files ",//wj盘地址路径
+            filesData: {},
+            folderAry: [],
+            SubfoldersPath: "",
+            Parentfolder: "", //返回上一级的父级文件夹名字
+            fileName: "",
+            DowFilesPath: "",
+            ShareFolderPath: "",
+            ParentName: "", //ParentName是外链接口进入文件夹时，给予文件一个父级文件夹名字
+            codeDate: "",
+            codePath: "",
+            userName: "",
+            newFolderName: "",
+            checkReadOnly: [],
+            ReadOnlyDate: "",
+            checkEncryption: [],
+            EncryptionDate: "",
+            FolderPassWord: "",
+            DeleteFolderPath: "",
+            style: "",
+            isFolder: true,
+            userInfo: [],
+            FolderToken: [],
+            isFolderPass: false,
+            progressBoxClass: "progressBox",
+            ClientIP: "1",
+            isHome: true,
+            pathArr: [],
+            Filedirectory: "",
+            IsShare: false,
+            CShareButton: "-200px",
+            dButton: "-166px",
+            createTime: "",
+            size: "",
+            FolderUserName: "",
+            updateTime: "",
+            ComeButton: [],
+            FolderInfo: "",
+            initialization: false,
+            isSignin: false,
+            UserName: ""
+        },
+        methods: {
+            getFileIcon(fileName) {
+                var fileExtension = fileName.substring(fileName.lastIndexOf('.') + 1);
+
+                switch (fileExtension) {
+                    case "docx":
+                    case "doc":
+                        return "img/word.png"
+                    case "ppt":
+                    case "pptx":
+                        return "img/ppt.png"
+                    case "xls":
+                    case "xlsx":
+                        return "img/excel.png"
+                    case "txt":
+                        return "img/txt.png"
+                    case "exe":
+                        return "img/exe.png"
+                    case "7z":
+                        return "img/yasuobao.png"
+                    case "zip":
+                        return "img/yasuobao.png"
+                    case "mp4":
+                        return "img/video.png"
+                    case "mp3":
+                        return "img/file_music.png"
+                    case "jpg":
+                    case "png":
+                        return "img/picture.png"
+                }
+                return "img/unknow.png "
+            },
+            getIp() {
+                var that = this;
+                try {
+                    $.post({
+                        url: apiUrl + "getIp",
+                        success: (e) => {
+                            console.log(e)
+                            that.ClientIP = e.data.IP;
+                            // console.log("本机ip为:" + that.ClientIP)
+                            // that.codePath = that.codeDate.data.code;
+                            var isExtranet = that.ClientIP.indexOf("10.10.226");
+                            if (isExtranet != -1) {
+                                apiUrl = "http://10.10.226.44:8001/"
+                                    // apiUrl = "http://string.cn1.utools.club/"
+                                console.log("连接apiurl为中心内网");
+                                // console.log(apiUrl);
+
+                            } else {
+                                console.log("连接apiurl为外网");
+                            }
+                        }
+
+                    })
+                } catch {
+                    apiUrl = "http://string.cn1.utools.club/"
+                    console.log("连接apiurl为外网");
+                    // $.post({
+                    //     url: apiUrl + "getIp",
+                    //     success: (e) => {
+                    //         console.log(e)
+                    //         that.ClientIP = e.data.IP;
+                    //         console.log("本机ip为:" + that.ClientIP)
+                    //             // that.codePath = that.codeDate.data.code;
+                    //         var isExtranet = that.ClientIP.indexOf("10.10.226");
+                    //         if (isExtranet != -1) {
+                    //             apiUrl = "http://10.10.226.44:8001/"
+
+                    //             console.log("连接apiurl为中心内网");
+                    //             // console.log(apiUrl);
+
+                    //         } else {
+                    //             console.log("连接apiurl为外网");
+                    //         }
+                    //     }
+
+                    // })
+                }
+
+
+            },
+            getFolderId(i) {
+                return "Folder" + i
+            },
+            getFileId(i) {
+                return "File" + i
+            },
+            getFiledirectory() {
+                var that = this;
+                that.pathArr = [];
+                if (that.ParentName != "/") {
+
+                    var strIndex = [];
+                    // console.log("地址字符串长度：" + str.length);
+                    for (var i = 0; i < that.ParentName.length; i++) {
+                        if (that.ParentName[i] == "/") {
+                            strIndex[strIndex.length] = i;
+                        }
+                    }
+
+                    for (var i = 0; i < strIndex.length; i++) {
+                        that.pathArr[i] = that.ParentName.slice(strIndex[i] + 1, strIndex[i + 1]);
+                    }
+                    console.log(that.pathArr);
+
+                }
+
+            },
+            JumpFolder(index) {
+                var that = this;
+                that.SubfoldersPath = "";
+                for (var i = 0; i < index + 1; i++) {
+                    that.SubfoldersPath += "/" + that.pathArr[i]
+                }
+                that.getFolder(that.SubfoldersPath);
+                console.log(index);
+                console.log("要跳转的文件路径" + that.SubfoldersPath);
+            },
+            getFolder(folderName, folderPassword = null) {
+                var that = this;
+                that.initialization = true
+                    // console.log(that.ClientIP);
+                    // var isExtranet = that.ClientIP.indexOf("10.10.226");
+                    // console.log(isExtranet)
+                    // if (isExtranet != -1) {
+                    //     apiUrl = "http://10.10.226.44:8001/"
+                    //     console.log("连接apiurl为中心内网");
+
+                // } else {
+                //     console.log("连接apiurl为外网");
+                // }
+                // that.apiUrl = "http://qiwei.cn1.utools.club/"
+                // console.log(apiUrl)
+                if (!folderName) folderName = "/";
+                $.post({
+                    url: apiUrl + "viewFolder",
+                    data: {
+                        path: folderName,
+                        password: folderPassword
+                    },
+                    success: (e) => {
+
+                        console.log(e)
+                        if (e.code == 200) {
+                            that.filesData = e.data;
+                            that.ParentName = that.filesData.path;
+                            // console.log("lllllllllllll:" + that.ParentName)
+                            that.getFiledirectory(); //文件目录
+                            if (that.initialization) {
+                                // that.getFolderInfo();
+                                // that.getIp();
+                            }
+
+                            if (that.isFolderPass == true) {
+                                var Info = {
+                                    "FolderPath": that.ShareFolderPath,
+                                    "FolderPassWord": that.FolderPassWord
+                                };
+                                var FolderInfo = JSON.stringify(Info);
+                                setCookie("FolderToken", FolderInfo, 0.025)
+                                that.isFolderPass = false
+                            }
+
+                        } else if (e.code == 251) {
+                            var FolderToken = that.getCookie("FolderToken");
+                            // var Ftoken = JSON.parse(FolderToken);
+                            var Info;
+                            if (getCookie("FolderToken") == "") {
+                                Swal({
+                                    title: '请输入文件夹密码⬇⬇⬇',
+                                    html: '<input id="passWord2" class="swal2-input" type="password" placeholder="请输入密码">',
+                                    focusConfirm: false,
+                                    preConfirm: () => {
+                                        return [
+                                            that.FolderPassWord = document.getElementById('passWord2').value,
+                                            console.log("当前输入的文件夹密码:" + that.FolderPassWord),
+                                            that.getFolder(that.ShareFolderPath, that.FolderPassWord),
+                                        ]
+                                    }
+                                })
+                                that.isFolderPass = true;
+
+                            } else {
+                                console.dir(FolderToken)
+                                var FolderCookie = JSON.parse(FolderToken);
+                                that.getFolder(FolderCookie.FolderPath, FolderCookie.FolderPassWord)
+                            }
+
+                        } else if (code = 250) {
+                            Swal.fire({
+                                title: 'Error!',
+                                text: '账号或者密码不正确',
+                                type: 'error',
+                                confirmButtonText: '确定'
+                            })
+                        }
+                        if (that.ParentName.length == 1) {
+                            that.isHome = false;
+                        } else {
+                            that.isHome = true;
+                        }
+
+
+
+                        // Swal.fire({
+                        //     title: '请输入文件夹密码⬇⬇⬇',
+                        //     type: 'password',
+                        //     inputPlaceholder: '你不会忘了吧?不会吧不会吧',
+                        //     confirmButtonText: 'Cool',
+                        //     inputAttributes: {
+                        //         maxlength: 10,
+                        //         autocapitalize: 'off',
+                        //         autocorrect: 'off'
+                        //     }
+                        // })
+
+                    }
+                })
+
+
+
+            },
+
+            getFile() {
+                var that = this;
+                // console.log(that.filesData.fileAry[].fileName);
+            },
+            Signin() {
+                var that = this;
+                // that.userName
+                $.post({
+                    url: apiUrl + "login",
+                    data: {
+                        userName: $("#userName").val(),
+                        passWord: $("#passWord").val(),
+                    },
+                    success: function(e) {
+                        // alert(e['code'] + "\r\n" + e['msg'] + "\r\n" + e["data"])
+                        console.dir(e)
+                        if (e.code == 200) {
+                            Swal({
+                                position: 'center',
+                                type: 'success',
+                                title: '登陆成功',
+                                showConfirmButton: false,
+                                timer: 1000
+                            })
+                            that.userInfo = {
+                                "token": e.data.token,
+                                "userName": e.data.userName
+                            };
+                            var userInfo = {
+                                "token": e.data.token,
+                                "userName": e.data.userName
+                            };
+                            var saveStr = JSON.stringify(userInfo);
+
+
+                            setCookie("userinfo", saveStr, 3);
+
+                            that.UserName = e.data.userName;
+                            that.userName = e.data.userName;
+
+                            that.Detectlogin();
+                            that.ComeButton = {
+                                width: '0px',
+                                padding: '0px'
+                            }
+                        } else {
+                            Swal.fire({
+                                title: 'Error!',
+                                text: '账号或者密码不正确',
+                                type: 'error',
+                                confirmButtonText: '确定'
+                            })
+                        }
+
+                    }
+                })
+            },
+            getCookie(cname) {
+                var that = this;
+                var name = cname + "=";
+                var ca = document.cookie.split(';');
+                for (var i = 0; i < ca.length; i++) {
+                    var c = ca[i].trim();
+                    if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
+                }
+                return "";
+            },
+            delCookie() {
+                var that = this;
+                document.cookie = "userinfo=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+                // Detectlogin();
+                Swal.fire({
+                    title: '成功退出登录',
+                    type: 'success',
+                    confirmButtonText: '确定'
+                })
+
+                setTimeout(() => {
+                    that.isSignin = false;
+                }, 10);
+
+
+                that.UserName = "";
+            },
+            Detectlogin() {
+                var that = this;
+                var d = that.getCookie("userinfo");
+                if (d == "") {
+                    that.isSignin = false;
+                    console.log("未检测到token");
+                } else {
+                    var data = JSON.parse(d);
+                    console.dir("用户登录token:" + data.token);
+                    that.userInfo = {
+                        "token": data.token,
+                        "userName": data.userName
+                    };
+                    that.UserName = data.userName;
+                    that.isSignin = true;
+                }
+            },
+            GetLoginInformation() {
+                var that = this;
+                // that.ComeButton = "30%";
+                that.ComeButton = {
+                    left: 'auto',
+                    width: '500px'
+                }
+
+
+                // Swal({
+                //     title: '请输入账号密码⬇⬇⬇',
+                //     html: '<input id="userName" class="swal2-input" type="txt" placeholder="请输入账号">' +
+                //         '<input id="passWord" class="swal2-input" type="password" placeholder="请输入密码">',
+                //     focusConfirm: false,
+                //     preConfirm: () => {
+                //         return [
+                //             document.getElementById('userName').value,
+                //             document.getElementById('passWord').value,
+                //             that.Signin(),
+                //         ]
+                //     }
+                // })
+
+            },
+            getCFolderInformation() { //获取创建文件夹的信息，CFolder是Create folder的缩写
+                var that = this;
+
+                if (that.checkReadOnly[0] == '1') {
+                    that.ReadOnlyDate = 1
+                } else {
+                    that.ReadOnlyDate = 0
+                }
+                if (that.checkEncryption[0] == '1') {
+                    that.EncryptionDate = 0
+                } else {
+                    that.EncryptionDate = 1
+                }
+                console.log("token:   " + that.userInfo.token)
+                console.log("新文件名:   " + that.newFolderName)
+                console.log("其他用户读写性  0只读 1读写:   " + that.ReadOnlyDate)
+                console.log("文件夹密码:   " + that.EncryptionDate)
+                console.log("文件夹公开性 0加密 1公开:   " + that.FolderPassWord)
+
+                if (that.FolderPassWord.length > 12) {
+
+                    Swal.fire({
+                        title: 'Error!',
+                        text: '请将密码控制在12位以内',
+                        type: 'error',
+                        confirmButtonText: '确定'
+                    })
+
+                } else {
+                    that.CreateFolder()
+                }
+                // that.CreateFolder()
+                // Swal({
+                //         title: '我们需要收集以下信息⬇⬇⬇',
+                //         html: '<input id="folderName" class="swal2-input" type="txt" placeholder="请输入文件夹名称">' +
+                //             '你想加密你的文件夹吗？<input id="encryption" name="encryption" type="checkbox" onclick="CFolderPopup()"><br/>' +
+                //             '<input id="encryptionvalue" class="swal2-input" type="txt" placeholder="">' +
+                //             '<input id="FolderpassWord" class="chFolderpassWord" type="password" placeholder="请输入你的文件夹密码" class="FolderpassWord">' +
+                //             '你同意让别人修改你的个人文件夹吗？<input id="readonly" name="readonly" type="checkbox" checked onclick="CFolderPopup()"><br/>' +
+                //             '<input id="readonlyvalue" class="swal2-input" type="txt" placeholder="" onclick="CFolderPopup2()">',
+
+                //         focusConfirm: false,
+                //         preConfirm: () => {
+                //             return [
+                //                 document.getElementById('userName').value,
+                //                 document.getElementById('passWord').value,
+                //             ]
+                //         }
+                //     })
+                // Swal({
+                //     title: 'Terms and conditions',
+                //     input: 'checkbox',
+                //     inputValue: 1,
+                //     inputPlaceholder: 'I agree with the terms and conditions',
+                //     confirmButtonText: 'Continue <i class="fa fa-arrow-right></i>',
+                //     inputValidator: (result) => {
+                //         return !result && 'You need to agree with T&C'
+                //     }
+                // })
+
+            },
+            CreateFolder() {
+                var that = this;
+                $.post({
+                    url: apiUrl + "createFolder",
+                    data: {
+                        token: that.userInfo.token,
+                        folderName: that.newFolderName,
+                        path: that.ParentName,
+                        folderSafety: that.EncryptionDate,
+                        folderPassword: that.FolderPassWord,
+                        readability: that.ReadOnlyDate,
+                    },
+                    success: function(e) {
+                        if (e.code == 200) {
+                            Swal({
+                                position: 'center',
+                                type: 'success',
+                                title: '创建文件夹成功',
+                                showConfirmButton: false,
+                                timer: 1000
+                            })
+                            that.getFolder(that.ParentName)
+                        } else {
+                            Swal.fire({
+                                title: '创建失败!',
+                                text: '请联系开发人员',
+                                type: 'error',
+                                confirmButtonText: '确定'
+                            })
+                        }
+                        // alert(e['code'] + "\r\n" + e['msg'] + "\r\n" + e["data"])
+                        console.dir(e)
+                    }
+                })
+            },
+
+            getSubfolders(e) {
+                var that = this;
+                that.SubfoldersPath = e.folderPath;
+                // console.log(JSON.stringify(this.obj))
+
+                if (that.isFolder == false) {
+                    that.getDownload(that.DowFilesPath);
+                } else {
+                    that.getFolder(that.SubfoldersPath);
+                    console.log("当前进入文件夹:" + that.SubfoldersPath);
+                }
+            },
+            // getSubfolders(e) {
+            //     var that = this;
+            //     SubfoldersName = e;
+            //     console.log(SubfoldersName);
+            //     // that.getFolder("// "+SubfoldersName);//wj本地路径
+            //     that.getFolder(SubfoldersName); //hzy路径
+            // },
+            shouye() {
+                var that = this;
+                that.getFolder();
+            },
+            getUpOneLevel() {
+                var that = this;
+                Parentfolder = that.filesData.parentPath;
+                console.log("返回的文件夹为:" + Parentfolder);
+                // that.ParentName = Parentfolder;
+                that.getFolder(Parentfolder);
+                // that.ParentName = Parentfolder;
+                that.pathArr = []; //初始化文件目录数组
+                // that.getFiledirectory();
+            },
+            // getSubfolders2(item) {
+            //     var that = this;
+            //     if (item.folderPath != "/ ") {
+            //         temp = item.folderPath + "/ ";
+            //     } else {
+            //         temp = item.folderPath;
+            //     }
+            //     that.getSubfolders(temp + item.folderName)
+            // },
+            // getUpOneLevel() {
+            //     var that = this;
+
+            // }
+            uploadfile() {
+                var that = this;
+
+                var d = that.getCookie("userinfo");
+                if (d == "") {
+                    Swal.fire({
+                        title: '上传失败!',
+                        text: '请先登录',
+                        type: 'error',
+                        confirmButtonText: '确定'
+                    })
+                } else {
+                    var data = JSON.parse(d);
+                    console.dir("浏览器token:" + data);
+                    that.userInfo = {
+                        "token": data.token,
+                        "userName": data.userName
+                    };
+                    that.isSignin = true;
+                }
+
+
+
+                if (that.progressBoxClass == "progressBox") {
+                    that.progressBoxClass = "progressBoxback";
+                } else {
+                    that.progressBoxClass = "progressBox";
+                }
+                console.log(that.progressBoxClass)
+                var  fileObj  =  document.getElementById("file").files[0];     
+                var  form  =  new  FormData();  // FormData 对象
+                form.append("file",  fileObj);  // 文件对象
+                form.append("token", that.userInfo.token);
+                form.append("path", that.SubfoldersPath);
+                if (form) {
+
+                }
+                $.post({
+                    url: apiUrl + "uploadFiles",
+                    data: form,
+                    contentType: false,
+                    processData: false,
+                    xhr: function() {
+                        var xhr = new XMLHttpRequest();
+                        //使用XMLHttpRequest.upload监听上传过程，注册progress事件，打印回调函数中的event事件
+                        xhr.upload.addEventListener('progress', function(e) {
+                            console.log(e);
+                            //loaded代表上传了多少
+                            //total代表总数为多少
+                            var progressRate = (e.loaded / e.total) * 100 + '%';
+
+                            //通过设置进度条的宽度达到效果
+                            $('.progress > div').css('width', progressRate);
+                        })
+                        return xhr;
+                    },
+                    success: (e) => {
+                        if (e != null) {
+                            if (that.progressBoxClass == "progressBox") {
+                                that.progressBoxClass = "progressBoxback";
+                            } else {
+                                that.progressBoxClass = "progressBox";
+                            }
+                        }
+                        if (e.code == 200) {
+                            Swal({
+                                position: 'center',
+                                type: 'success',
+                                title: '上传文件成功',
+                                showConfirmButton: false,
+                                timer: 1000
+                            })
+                        } else {
+                            Swal.fire({
+                                title: '上传失败!',
+                                text: '请联系管理员',
+                                type: 'error',
+                                confirmButtonText: '确定'
+                            })
+                        }
+
+                        console.dir("文件上传信息" + e)
+                        console.log(that.SubfoldersPath);
+                        that.getFolder(that.SubfoldersPath);
+                    }
+                })
+            },
+
+            getDownloadPath(e) {
+                var that = this;
+                that.isFolder = false;
+                that.dButton = "-166px";
+                that.DowFilesPath = that.ParentName + "/" + e; //ParentName是外链接口进入文件夹时，给予文件一个父级文件夹名字
+                console.log("当前选中的文件下载路径:" + that.DowFilesPath);
+                console.log("当前选中的是不是文件夹:" + that.isFolder);
+            },
+            DeleteFolder() {
+                var that = this;
+                that.DeleteFolderPath = that.ShareFolderPath;
+                if (that.isFolder == true) {
+                    $.post({
+                        url: apiUrl + "deleteFolder",
+                        data: {
+                            token: that.userInfo.token,
+                            path: that.DeleteFolderPath
+                        },
+                        success: function(e) {
+                            if (e.code == 200) {
+                                Swal({
+                                    position: 'center',
+                                    type: 'success',
+                                    title: '删除文件夹成功',
+                                    showConfirmButton: false,
+                                    timer: 1000
+                                })
+                                that.getFolder(that.ParentName)
+                            } else {
+                                Swal.fire({
+                                    title: '删除失败!',
+                                    text: '请联系开发人员',
+                                    type: 'error',
+                                    confirmButtonText: '确定'
+                                })
+                            }
+                            // alert(e['code'] + "\r\n" + e['msg'] + "\r\n" + e["data"])
+                            console.dir(e)
+                            console.dir(that.isFolder)
+                        }
+                    })
+                } else {
+                    $.post({
+                        url: apiUrl + "deleteFile",
+                        data: {
+                            token: that.userInfo.token,
+                            path: that.DowFilesPath
+                        },
+                        success: function(e) {
+
+                            if (e.code == 200) {
+                                Swal({
+                                    position: 'center',
+                                    type: 'success',
+                                    title: '删除文件成功',
+                                    showConfirmButton: false,
+                                    timer: 1000
+                                })
+                                that.getFolder(that.ParentName)
+                            } else {
+                                Swal.fire({
+                                    title: '删除失败!',
+                                    text: '请联系开发人员',
+                                    type: 'error',
+                                    confirmButtonText: '确定'
+                                })
+                            }
+
+                            // alert(e['code'] + "\r\n" + e['msg'] + "\r\n" + e["data"])
+                            console.log("检测登录查看用户是否有权限删除" + that.userInfo.token)
+                            console.dir("是不是文件夹" + that.isFolder)
+                            console.log("删除文件的路径" + that.DowFilesPath)
+                        }
+                    })
+                }
+
+
+            },
+            getFolderInfo(e, IsShare, info) {
+                var that = this;
+                that.isFolder = true;
+                console.log("当前的文件路径" + that.ParentName)
+                if (that.ParentName == "/") {
+                    that.FolderInfo = that.ParentName + e;
+                    that.ShareFolderPath = that.FolderInfo;
+                    console.log("当前点击的文件名:" + e)
+                } else {
+                    that.FolderInfo = that.ParentName + "/" + e;
+                    that.ShareFolderPath = that.FolderInfo;
+                    console.log("当前点击的文件名:" + e)
+                }
+                if (IsShare == true) {
+                    that.CShareButton = "0px"
+                    that.dButton = "-100px"
+                } else {
+                    that.CShareButton = "-200px"
+                    that.dButton = "-166px"
+                }
+                if (e) {
+                    that.createTime = info.createTime;
+                    that.FolderUserName = info.userName;
+                    if (info.updateTime == null) {
+                        that.updateTime = that.createTime;
+                    } else {
+                        that.updateTime = info.updateTime;
+                    }
+
+                }
+
+
+                console.log("当前文件是否被分享:" + IsShare);
+                console.log("当前文件夹路径:" + that.FolderInfo);
+                console.log("当前点击的是不是文件夹:" + that.isFolder);
+            },
+            ShareFolder(codePath) {
+                var that = this;
+                $.post({
+                        url: apiUrl + "GetCodeByPath",
+                        data: {
+                            path: that.ShareFolderPath,
+                            token: that.userInfo.token
+                        },
+                        success: (e) => {
+                            that.codeDate = e;
+                            // that.codePath = that.codeDate.data.code;
+
+                            if (e.code == 200) {
+                                that.codePath += "http://publicspace.cn1.utools.club?&code=" + that.codeDate.data.code;
+                                console.log(that.codePath)
+
+                                Swal.fire({
+                                    title: "创建链接成功⬇⬇⬇",
+                                    input: 'text',
+                                    inputValue: that.codePath,
+                                    type: "success",
+                                    buttonsStyling: false,
+                                    confirmButtonClass: "btn btn-success",
+                                })
+                            }
+
+                        }
+
+                    })
+                    // that.codePath += "分享链接为:http://127.0.0.1:5500/index.html?&code=" + that.codePath;
+            },
+            getDownload(fName) {
+
+                var that = this;
+                var searchText = "英语 ";
+                //通过URL传递：需要编码两次
+                searchText = encodeURI(searchText);
+                searchText = encodeURI(searchText);
+
+                var fName = that.DowFilesPath
+
+                var url = apiUrl + "downloadFile?path=" + fName;
+
+
+                console.log(url)
+
+                top.location.href = url;
+                // window.open(url)
+
+            },
+            getQueryVariable(variable) {
+
+                var query = window.location.search.substring(1);
+                var vars = query.split("&");
+                for (var i = 0; i < vars.length; i++) {
+                    var pair = vars[i].split("=");
+                    if (pair[0] == variable) {
+                        return pair[1];
+                    }
+                }
+                return (false);
+            },
+
+
+            CancelShareFolder() {
+                var that = this;
+                $.post({
+                    url: apiUrl + "unsharedFolder",
+                    data: {
+                        path: that.ShareFolderPath,
+                        token: that.userInfo.token
+                    },
+                    success: (e) => {
+                        console.log(e)
+                        Swal({
+                                position: 'center',
+                                type: 'success',
+                                title: '取消分享成功',
+                                showConfirmButton: false,
+                                timer: 1000
+                            })
+                            // that.codePath = that.codeDate.data.code;
+                        that.getFolder(that.ParentName);
+                    }
+
+                })
+            },
+            comeback() {
+                var that = this;
+                that.ComeButton = {
+                    width: '0px',
+                    padding: '0px'
+                }
+            },
+
+            //⬇⬇⬇文件拖拽上传
+            dropEvent(e) {
+                this.dropActive = false
+                e.stopPropagation()
+                e.preventDefault()
+                this.uploadFile(e.dataTransfer.files)
+            },
+            uploadFile(file) { // 渲染上传文件
+                var that = this;
+                // console.log(file[0], 'file')
+                if (file && file.length) {
+                    //自行发挥，存本地或上传服务器   
+
+
+                    var d = that.getCookie("userinfo");
+                    if (d == "") {
+                        Swal.fire({
+                            title: '上传失败!',
+                            text: '请先登录',
+                            type: 'error',
+                            confirmButtonText: '确定'
+                        })
+                    } else {
+                        var data = JSON.parse(d);
+                        console.dir("浏览器token:" + data);
+                        that.userInfo = {
+                            "token": data.token,
+                            "userName": data.userName
+                        };
+                        that.isSignin = true;
+                    }
+
+
+
+                    if (that.progressBoxClass == "progressBox") {
+                        that.progressBoxClass = "progressBoxback";
+                    } else {
+                        that.progressBoxClass = "progressBox";
+                    }
+                    console.log(that.progressBoxClass)
+                        // var  fileObj  =  document.getElementById("file").files[0];     
+                        // FormData 对象
+                    for (var i = 0; i < file.length; i++) {
+                        var  form  =  new  FormData(); 
+                        form.append("file", file[i]);
+                        // form.append("file", file[0]);  // 文件对象
+                        form.append("token", that.userInfo.token);
+                        form.append("path", that.SubfoldersPath);
+                        $.post({
+                            url: apiUrl + "uploadFiles",
+                            data: form,
+                            contentType: false,
+                            processData: false,
+                            xhr: function() {
+                                var xhr = new XMLHttpRequest();
+                                //使用XMLHttpRequest.upload监听上传过程，注册progress事件，打印回调函数中的event事件
+                                xhr.upload.addEventListener('progress', function(e) {
+                                    console.log(e);
+                                    //loaded代表上传了多少
+                                    //total代表总数为多少
+                                    var progressRate = (e.loaded / e.total) * 100 + '%';
+
+                                    //通过设置进度条的宽度达到效果
+                                    $('.progress > div').css('width', progressRate);
+                                })
+                                return xhr;
+                            },
+                            success: (e) => {
+                                if (e != null) {
+                                    if (that.progressBoxClass == "progressBox") {
+                                        that.progressBoxClass = "progressBoxback";
+                                    } else {
+                                        that.progressBoxClass = "progressBox";
+                                    }
+                                }
+                                if (i == file.length) { //判断循环的最后一次，在弹出提示框
+                                    if (e.code == "200") {
+                                        Swal({
+                                            position: 'center',
+                                            type: 'success',
+                                            title: '上传文件成功',
+                                            showConfirmButton: false,
+                                            timer: 1000
+                                        })
+                                    } else {
+                                        Swal.fire({
+                                            title: '上传失败!',
+                                            text: '请联系管理员',
+                                            type: 'error',
+                                            confirmButtonText: '确定'
+                                        })
+                                    }
+                                    console.dir(e)
+                                    console.log(that.SubfoldersPath);
+                                    that.getFolder(that.SubfoldersPath);
+                                }
+                            }
+                        })
+
+                    }
+
+                }
+            },
+            goZc() {
+                var that = this;
+                window.location = "registered.html"
+            }
+
+            // transitionendHandler() {
+            //     var that = this;
+            //     let {
+            //         isActive
+            //     } = this;
+            //     if (isActive) {
+            //         // this.$refs.box.style.display = 'block'
+            //         that.ComeButton.display = 'block';
+            //     } else {
+            //         that.ComeButton.display = 'none';
+            //     }
+
+            // }
+        },
+
+        mounted() {
+            var that = this;
+            that.getIp();
+            that.getFolder();
+            that.getFile();
+            that.Detectlogin();
+
+            var code = that.getQueryVariable("code")
+
+            if (code) {
+                $.post({
+                    url: apiUrl + "viewFolderByCode",
+                    data: {
+                        code: code,
+                    },
+                    success: (e) => {
+                        console.log(e);
+                        that.getFolder(e.data.path)
+                    }
+                })
+            }
+            //文件拖拽上传
+            let dropArea = document.getElementById('drop-area')
+            dropArea.addEventListener('drop', this.dropEvent, false)
+            dropArea.addEventListener('dragleave', (e) => {
+                e.stopPropagation()
+                e.preventDefault()
+                this.dropActive = false
+            })
+            dropArea.addEventListener('dragenter', (e) => {
+                e.stopPropagation()
+                e.preventDefault()
+                this.dropActive = true
+            })
+            dropArea.addEventListener('dragover', (e) => {
+                e.stopPropagation()
+                e.preventDefault()
+                this.dropActive = true
+            })
+
+
+
+            that.ComeButton = {
+                width: '0px',
+                padding: '0px'
+            }
+
+
+            // setInterval(() => {
+            //     that.getFolder();
+            // }, 1000)
+        },
+
+    })
+</script>
+
+
+<!--   Core JS Files   -->
+<script src="assets/js/core/popper.min.js " type="text/javascript "></script>
+<script src="assets/js/core/bootstrap-material-design.min.js " type="text/javascript "></script>
+<script src="assets/js/plugins/perfect-scrollbar.jquery.min.js "></script>
+<!-- Chartist JS -->
+<script src="assets/js/plugins/chartist.min.js "></script>
+<!--  Notifications Plugin    -->
+<script src="assets/js/plugins/bootstrap-notify.js "></script>
+<!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
+<!-- <script src="assets/js/material-dashboard.js?v=2.1.1 " type="text/javascript "></script>未知错误,此行注释 -->
+<script src="js/js.js " type="text/javascript "></script>

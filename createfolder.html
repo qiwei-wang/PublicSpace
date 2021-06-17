@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="js/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    用户名<input type="text" id="userName"><br/>
+    文件夹名<input type="text" id="folderName"><br/>
+    路径<input type="text" id="path" value="qwe"><br/>
+    <input type="button" onclick="kk()" value="创建">
+</body>
+</html>
+<script>
+    function kk(){
+        $.post({
+            url:"http://10.10.226.44:5001/createFolder",
+            data:{
+                userName:$("#userName").val(),
+                folderName:$("#folderName").val(),
+                path:$("#path").val()
+            },
+            success:(e)=>{
+                alert(e['code']+"\r\n"+e['msg']+"\r\n"+e["data"])
+                console.dir(e)
+            }
+        })
+    }
+</script>
